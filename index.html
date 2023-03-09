@@ -455,7 +455,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-09 20:26:13" itemprop="dateModified" datetime="2023-03-09T20:26:13+08:00">2023-03-09</time>
+                <time title="修改时间：2023-03-09 20:31:42" itemprop="dateModified" datetime="2023-03-09T20:31:42+08:00">2023-03-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -495,8 +495,8 @@
           <h4 id="js的数据类型有哪些"><a class="markdownIt-Anchor" href="#js的数据类型有哪些"></a> JS的数据类型有哪些</h4>
 <p>在js中数据类型分为两种：<strong>原始值和引用值</strong>。原始值有string、number、boolean、null、undefined、Symbol、BigInt等类型，引用值有Object类型，Date、Array、TypeArray等引用类型都是Object的实例。</p>
 <h4 id="如何区分js的数据类型"><a class="markdownIt-Anchor" href="#如何区分js的数据类型"></a> 如何区分JS的数据类型</h4>
-<p><strong>除了 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/null"><code>null</code></a>之外，所有原始类型都可以使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof"><code>typeof</code></a> 运算符测试。</strong><code>typeof null</code> 返回 <code>&quot;object&quot;</code>，因此必须使用 <code>=== null</code> 来测试 <code>null</code>。</p>
-<p>**所有引用值都可以使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof"><code>instanceof</code></a>操作符判断。**所有引用值都是<code>Object</code>的实例，因此通过<code>instanceof</code>操作符检测任何引用值和<code>Object</code>构造函数都会返回true。如果用<code>instanceof</code>检测原始值，则始终会返回false，因为原始值不是对象。</p>
+<p>除了 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/null"><code>null</code></a>之外，所有原始类型都可以使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof"><code>typeof</code></a> 运算符测试。<code>typeof null</code> 返回 <code>&quot;object&quot;</code>，因此必须使用 <code>=== null</code> 来测试 <code>null</code>。</p>
+<p>所有引用值都可以使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof"><code>instanceof</code></a>操作符判断。所有引用值都是<code>Object</code>的实例，因此通过<code>instanceof</code>操作符检测任何引用值和<code>Object</code>构造函数都会返回true。如果用<code>instanceof</code>检测原始值，则始终会返回false，因为原始值不是对象。</p>
 <p>基于上面的知识点，可以整理一下判断的步骤：</p>
 <ol>
 <li>使用<code>typeof</code>操作符判断变量的类型，如果是string、number、boolean、undefined、Symbol、BigInt等数据类型，则直接返回数据类型的字符串。</li>
