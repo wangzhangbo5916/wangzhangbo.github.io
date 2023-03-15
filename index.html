@@ -195,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-13 00:28:05 / 修改时间：10:09:38" itemprop="dateCreated datePublished" datetime="2023-03-13T00:28:05+08:00">2023-03-13</time>
+              <time title="创建时间：2023-03-13 00:28:05" itemprop="dateCreated datePublished" datetime="2023-03-13T00:28:05+08:00">2023-03-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-15 20:46:56" itemprop="dateModified" datetime="2023-03-15T20:46:56+08:00">2023-03-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -215,14 +221,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>30</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -234,7 +240,152 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="objectprototypetostring的工作原理"><a class="markdownIt-Anchor" href="#objectprototypetostring的工作原理"></a> Object.prototype.toString的工作原理</h4>
+          <p>在判断js数据类型时，经常会用到<code>Object.prototype.toString</code>方法进行判断，那么你有思考过为什么这个方法可以判断出变量的准确类型？为什么使用的时候要用<code>call</code>方法？下面的文章将帮助你了解<code>Object.prototype.toString</code>方法的底层原理。</p>
+<h4 id="objectprototypetostring的工作原理"><a class="markdownIt-Anchor" href="#objectprototypetostring的工作原理"></a> Object.prototype.toString的工作原理</h4>
+<p>首先查看<a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-15.2.4.2">ES5官方文档</a>对于<code>Object.prototype.toString</code>方法的描述：</p>
+<p><strong>Object.prototype.toString ( )</strong></p>
+<p>When the <code>toString</code> method is called, the following steps are taken:</p>
+<ol>
+<li>If the <strong>this</strong> value is <strong>undefined</strong>, return <code>&quot;[object Undefined]&quot;</code>.</li>
+<li>If the <strong>this</strong> value is <strong>null</strong>, return <code>&quot;[object Null]&quot;</code>.</li>
+<li>Let <em>O</em> be the result of calling <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-9.9">ToObject</a> passing the <strong>this</strong> value as the argument.</li>
+<li>Let <em>class</em> be the value of the [[Class]] internal property of <em>O</em>.</li>
+<li>Return the String value that is the result of concatenating the three Strings <code>&quot;[object &quot;</code>, <em>class</em>, and <code>&quot;]&quot;</code>.</li>
+</ol>
+<p>上面的英文翻译过来的意思是：</p>
+<p>当<code>toString</code>方法被调用的时候，会执行下面的步骤：</p>
+<ol>
+<li>如果**<code>this</code><strong>的值是</strong><code>undefined</code>**，返回<code>&quot;[object Undefined]&quot;</code>。</li>
+<li>如果**<code>this</code><strong>的值是</strong><code>null</code>**，返回<code>&quot;[object NUll]&quot;</code>。</li>
+<li>如果是其他值，则先将**<code>this</code>**的值作为参数传给 <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-9.9">ToObject</a> 函数调用并得到结果</li>
+<li>将结果的<code>[[Class]]</code>属性值作为变量class进行拼接，最终的结果是<code>&quot;[object class]&quot;</code>。</li>
+</ol>
+<p>1和2不用赘述了，第3步中的 <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-9.9">ToObject</a> 函数是什么意思哪？可以看一下<a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-9.9">ToObject官方文档</a>:</p>
+<p><strong>ToObject</strong></p>
+<p>The abstract operation ToObject converts its argument to a value of type Object according to Table 14:</p>
+<p><strong>Table 14 — ToObject</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Argument Type</strong></th>
+<th><strong>Result</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undefined</td>
+<td>Throw a <strong>TypeError</strong> exception.</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>Throw a <strong>TypeError</strong> exception.</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>Create a new Boolean object whose [[PrimitiveValue]] internal property is set to the value of the argument. See <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-15.6">15.6</a> for a description of Boolean objects.</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>Create a new Number object whose [[PrimitiveValue]] internal property is set to the value of the argument. See <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-15.7">15.7</a> for a description of Number objects.</td>
+</tr>
+<tr>
+<td>String</td>
+<td>Create a new String object whose [[PrimitiveValue]] internal property is set to the value of the argument. See <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-15.5">15.5</a> for a description of String objects.</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>The result is the input argument (no conversion).</td>
+</tr>
+</tbody>
+</table>
+<p>翻译过来：</p>
+<p><code>ToObject</code>抽象方法会根据下面的表格把方法的参数转化为类型对象的值。</p>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undefined</td>
+<td>抛出一个异常</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>抛出一个异常</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>创建一个有<code>[[PrimitiveValue]]</code>内部属性的<code>Boolean</code>对象</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>创建一个有<code>[[PrimitiveValue]]</code>内部属性的<code>Number</code>对象</td>
+</tr>
+<tr>
+<td>String</td>
+<td>创建一个有<code>[[PrimitiveValue]]</code>内部属性的<code>String</code>对象</td>
+</tr>
+<tr>
+<td>Object</td>
+<td>输入的参数就是结果。（不进行转换）</td>
+</tr>
+</tbody>
+</table>
+<p>第4步中的<code>[[Class]]</code>属性是什么哪？可以看一下官网中的一些片段：</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;String&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed Boolean object is set to <code>&quot;Boolean&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;Number&quot;</code>.</p>
+<p>The value of the [[Class]] internal property of the Math object is <code>&quot;Math&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;Date&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;RegExp&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;Error&quot;</code>.</p>
+<p>The value of the [[Class]] internal property is <code>&quot;Function&quot;</code>.</p>
+<p>The [[Class]] internal property of the newly constructed object is set to <code>&quot;Array&quot;</code>.</p>
+<p>The value of the [[Class]] internal property of the JSON object is <code>&quot;JSON&quot;</code>.</p>
+<p>…</p>
+<p>从上面可以看出来String、Boolean、Number、Math、Date、RegExp、Error、Function对象的[[Class]]是对象名的字符串。</p>
+<p>总结上面的内容：</p>
+<p><strong>当<code>Object.prototype.toString</code>方法被调用的时候，会执行下面的步骤</strong>：</p>
+<ol>
+<li>如果**<code>this</code><strong>的值是</strong><code>undefined</code>**，返回<code>&quot;[object Undefined]&quot;</code>。</li>
+<li>如果**<code>this</code><strong>的值是</strong><code>null</code>**，返回<code>&quot;[object NUll]&quot;</code>。</li>
+<li>如果**<code>this</code><strong>的值是</strong><code>String</code><strong>、</strong><code>Number</code><strong>、</strong><code>Boolean</code><strong>等原始类型，则先把原始类型准换成对应的引用类型，然后获取其引用类型的<code>[[Class]]</code>属性值，即</strong><code>&quot;String&quot;</code><strong>、</strong><code>&quot;Number&quot;</code><strong>、</strong><code>&quot;Boolean&quot;</code><strong>等字符串，然后拼接为</strong><code>&quot;[object String]&quot;</code><strong>、</strong><code>&quot;[object Number]&quot;</code><strong>、</strong><code>&quot;[object Boolean]&quot;</code>**。</li>
+<li>如果**<code>this</code><strong>的值是</strong><code>Math</code><strong>、</strong><code>Date</code><strong>、</strong><code>RegExp</code><strong>、</strong><code>Error</code><strong>、</strong><code>Function</code><strong>、</strong><code>Array</code><strong>等引用类型，则直接获取其<code>[[Class]]</code>属性值，即</strong><code>&quot;Math&quot;</code><strong>、</strong><code>&quot;Date&quot;</code><strong>、</strong><code>&quot;RegExp&quot;</code><strong>、</strong><code>&quot;Error&quot;</code><strong>、</strong><code>&quot;Function&quot;</code><strong>、</strong><code>&quot;Array&quot;</code><strong>等字符串。，然后拼接为</strong><code>&quot;[object Math]&quot;</code><strong>、</strong><code>&quot;[object Date]&quot;</code><strong>、</strong><code>&quot;[object RegExp]&quot;</code><strong>、</strong><code>&quot;[object Error]&quot;</code><strong>、</strong><code>&quot;[object Function]&quot;</code><strong>、</strong><code>&quot;[object Array]&quot;</code>**。</li>
+</ol>
+<h4 id="为什么objectprototypetostring方法使用时要使用call方法"><a class="markdownIt-Anchor" href="#为什么objectprototypetostring方法使用时要使用call方法"></a> 为什么<code>Object.prototype.toString</code>方法使用时要使用<code>call</code>方法</h4>
+<p>在上面的执行步骤中特别强调了**<code>this</code><strong>，这个是很重要的，当直接使用<code>Object.prototype.toString</code>方法时，</strong><code>this</code><strong>的值是</strong><code>Object</code>**本身，执行结果也就是&quot;[object Object]&quot;字符串。</p>
+<p>而当使用**<code>call</code><strong>方法时，就修改了<code>Object.prototype.toString</code>方法的</strong><code>this</code><strong>值，此时</strong><code>this</code><strong>的值就是</strong><code>call</code>**方法的参数。</p>
+<h4 id="es6的"><a class="markdownIt-Anchor" href="#es6的"></a> <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object.prototype.tostring">ES6的<code>Object.prototype.toString</code>方法</a></h4>
+<p>在ES6的官方文档中<code>Object.prototype.toString</code>方法发生了新的变化：</p>
+<p><strong>Object.prototype.toString()</strong></p>
+<p>When the <code>toString</code> method is called, the following steps are taken:</p>
+<ol>
+<li>If the <strong>this</strong> value is <strong>undefined</strong>, return <code>&quot;[object Undefined]&quot;</code>.</li>
+<li>If the <strong>this</strong> value is <strong>null</strong>, return <code>&quot;[object Null]&quot;</code>.</li>
+<li>Let <em>O</em> be <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-toobject">ToObject</a>(<strong>this</strong> value).</li>
+<li>Let <em>isArray</em> be <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-isarray">IsArray</a>(<em>O</em>).</li>
+<li><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-returnifabrupt">ReturnIfAbrupt</a>(<em>isArray</em>).</li>
+<li>If <em>isArray</em> is <strong>true</strong>, let <em>builtinTag</em> be <code>&quot;Array&quot;</code>.</li>
+<li>Else, if <em>O</em> is an exotic String object, let <em>builtinTag</em> be <code>&quot;String&quot;</code>.</li>
+<li>Else, if <em>O</em> has an [[ParameterMap]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;Arguments&quot;</code>.</li>
+<li>Else, if <em>O</em> has a [[Call]] internal method, let <em>builtinTag</em> be <code>&quot;Function&quot;</code>.</li>
+<li>Else, if <em>O</em> has an [[ErrorData]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;Error&quot;</code>.</li>
+<li>Else, if <em>O</em> has a [[BooleanData]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;Boolean&quot;</code>.</li>
+<li>Else, if <em>O</em> has a [[NumberData]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;Number&quot;</code>.</li>
+<li>Else, if <em>O</em> has a [[DateValue]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;Date&quot;</code>.</li>
+<li>Else, if <em>O</em> has a [[RegExpMatcher]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a>, let <em>builtinTag</em> be <code>&quot;RegExp&quot;</code>.</li>
+<li>Else, let <em>builtinTag</em> be <code>&quot;Object&quot;</code>.</li>
+<li>Let <em>tag</em> be Get (<em>O</em>, @@toStringTag).</li>
+<li><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-returnifabrupt">ReturnIfAbrupt</a>(<em>tag</em>).</li>
+<li>If <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-ecmascript-data-types-and-values">Type</a>(<em>tag</em>) is not String, let <em>tag</em> be <em>builtinTag</em>.</li>
+<li>Return the String that is the result of concatenating <code>&quot;[object &quot;</code>, <em>tag</em>, and <code>&quot;]&quot;</code>.</li>
+</ol>
+<p>This function is the %ObjProto_toString% intrinsic object.</p>
+<p>NOTEHistorically, this function was occasionally used to access the String value of the [[Class]] <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-object-internal-methods-and-internal-slots">internal slot</a> that was used in previous editions of this specification as a nominal type tag for various built-in objects. The above definition of <code>toString</code> preserves compatibility for legacy code that uses <code>toString</code> as a test for those specific kinds of built-in objects. It does not provide a reliable type testing mechanism for other kinds of built-in or program defined objects. In addition, programs can use @@toStringTag in ways that will invalidate the reliability of such legacy type tests.</p>
+<h4 id="如何让objectprototypetostring方法识别自定义对象"><a class="markdownIt-Anchor" href="#如何让objectprototypetostring方法识别自定义对象"></a> 如何让<code>Object.prototype.toString</code>方法识别自定义对象</h4>
 
       
     </div>
@@ -783,19 +934,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">4k</span>
+    <span title="站点总字数">9k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4 分钟</span>
+    <span title="站点阅读时长">9 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共1.4k字</span>
+  <span class="post-count">博客全站共2.8k字</span>
 </div>
 
 
