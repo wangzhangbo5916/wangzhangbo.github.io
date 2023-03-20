@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-16 21:17:26" itemprop="dateModified" datetime="2023-03-16T21:17:26+08:00">2023-03-16</time>
+                <time title="修改时间：2023-03-20 19:38:32" itemprop="dateModified" datetime="2023-03-20T19:38:32+08:00">2023-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,8 +353,8 @@
 <ol>
 <li>如果<strong>this</strong>的值是<strong>undefined</strong>，返回<code>&quot;[object Undefined]&quot;</code>。</li>
 <li>如果<strong>this</strong>的值是<strong>null</strong>，返回<code>&quot;[object Null]&quot;</code>。</li>
-<li>如果<strong>this</strong>的值是<strong>String</strong>、<strong>Number</strong>、<strong>Boolean</strong>等原始类型，则先把原始类型准换成对应的引用类型，然后获取其引用类型的<code>[[Class]]</code>属性值，即<code>&quot;String&quot;</code>、<strong>“Number”</strong>、<strong>“Boolean&quot;<strong>等字符串，然后拼接为<code>&quot;[object String]&quot;</code>、</strong>”[object Number]&quot;</strong>、<strong>&quot;[object Boolean]&quot;</strong>。</li>
-<li>如果<strong>this</strong>的值是<strong>Math</strong>、<strong>Date</strong>、<strong>RegExp</strong>、<strong>Error</strong>、<strong>Function</strong>、<strong>Array</strong>、<strong>JSON</strong>、<strong>Object</strong>、<strong>Arguments</strong>等引用类型，则直接获取其<code>[[Class]]</code>属性值，即<code>&quot;Math&quot;</code>、<code>&quot;Date&quot;</code>、<code>&quot;RegExp&quot;</code>、<code>&quot;Error&quot;</code>、<code>&quot;Function&quot;</code>、<code>&quot;Array&quot;</code>、<code>&quot;JSON&quot;</code>、<code>&quot;Object&quot;</code>、<code>&quot;Arguments&quot;</code>等字符串。，然后拼接为<code>&quot;[object Math]&quot;</code>、<code>&quot;[object Date]&quot;</code>、<code>&quot;[object RegExp]&quot;</code>、<code>&quot;[object Error]&quot;</code>、<code>&quot;[object Function]&quot;</code>、<code>&quot;[object Array]&quot;</code>、<code>&quot;[object JSON]&quot;</code>、<code>&quot;[object Object]&quot;</code>、<code>&quot;[object Arguments]&quot;</code>。</li>
+<li>如果<strong>this</strong>的值是<strong>String</strong>、<strong>Number</strong>、<strong>Boolean</strong>等原始类型，则先把原始类型准换成对应的引用类型，然后获取其引用类型的<code>[[Class]]</code>属性值，即**“String”<strong>、</strong>“Number”<strong>、</strong>“Boolean”**等字符串，然后拼接为<code>&quot;[object String]&quot;</code>、<code>&quot;[object Number]&quot;</code>、<code>&quot;[object Boolean]&quot;</code>。</li>
+<li>如果<strong>this</strong>的值是<strong>Math</strong>、<strong>Date</strong>、<strong>RegExp</strong>、<strong>Error</strong>、<strong>Function</strong>、<strong>Array</strong>、<strong>JSON</strong>、<strong>Object</strong>、<strong>Arguments</strong>等引用类型，则直接获取其<code>[[Class]]</code>属性值，即<code>&quot;Math&quot;</code>、<code>&quot;Date&quot;</code>、<code>&quot;RegExp&quot;</code>、<code>&quot;Error&quot;</code>、<code>&quot;Function&quot;</code>、<code>&quot;Array&quot;</code>、<code>&quot;JSON&quot;</code>、<code>&quot;Object&quot;</code>、<code>&quot;Arguments&quot;</code>等字符串。然后拼接为<code>&quot;[object Math]&quot;</code>、<code>&quot;[object Date]&quot;</code>、<code>&quot;[object RegExp]&quot;</code>、<code>&quot;[object Error]&quot;</code>、<code>&quot;[object Function]&quot;</code>、<code>&quot;[object Array]&quot;</code>、<code>&quot;[object JSON]&quot;</code>、<code>&quot;[object Object]&quot;</code>、<code>&quot;[object Arguments]&quot;</code>。</li>
 </ol>
 <h4 id="为什么objectprototypetostring方法使用时要使用call方法"><a class="markdownIt-Anchor" href="#为什么objectprototypetostring方法使用时要使用call方法"></a> 为什么<code>Object.prototype.toString</code>方法使用时要使用<code>call</code>方法</h4>
 <p>在上面的执行步骤中特别强调了<strong>this</strong>，当直接使用<code>Object.prototype.toString</code>方法时，<strong>this</strong>的值是<strong>Object</strong>本身，执行结果也就是<code>&quot;[object Object]&quot;</code>字符串。</p>
@@ -391,7 +391,7 @@
 <li>如果<strong>this</strong>的值是<strong>undefined</strong>，返回<code>&quot;[object Undefined]&quot;</code>。</li>
 <li>如果<strong>this</strong>的值是<strong>null</strong>，返回<code>&quot;[object Null]&quot;</code>。</li>
 <li>假设<strong>O</strong>是<a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-toobject">ToObject</a>方法把<strong>this</strong>的值作为参数执行的结果。</li>
-<li>把<strong>O</strong>作为<strong>isArray</strong>方法的参数执行。</li>
+<li>使用<strong>isArray</strong>方法验证<strong>O</strong>。</li>
 <li>如果<strong>isArray</strong>方法返回<strong>true</strong>，则内部标识为<code>&quot;Array&quot;</code>。</li>
 <li>如果<strong>O</strong>是特定字符串对象，则内部标识为<code>&quot;String&quot;</code>。</li>
 <li>如果<strong>O</strong>有一个<code>[[ParameterMap]]</code>内部插槽，则内部标识为<code>&quot;Arguments&quot;</code>。</li>
@@ -402,18 +402,18 @@
 <li>如果<strong>O</strong>有一个<code>[[DateValue]]</code>内部插槽，则内部标识为<code>&quot;Date&quot;</code>。</li>
 <li>如果<strong>O</strong>有一个<code>[[RegExpMatcher]]</code>内部插槽，则内部标识为<code>&quot;RegExp&quot;</code>。</li>
 <li>如果都不是则内部标识为<code>&quot;Object&quot;</code>。</li>
-<li>假设<strong>tag</strong>是<strong>O</strong>对象的<code>@@toStringTag</code>。</li>
-<li>如果<strong>tag</strong>不是字符串，则<strong>tag</strong>等于内部标识。</li>
+<li>假设<strong>tag</strong>是<strong>O</strong>对象的<code>@@toStringTag</code>属性值。</li>
+<li>如果<strong>tag</strong>获取<code>@@toStringTag</code>属性值不是字符串，则<strong>tag</strong>等于内部标识。</li>
 <li>最后返回拼接后的字符串<code>&quot;[object tag]&quot;</code>。</li>
 </ol>
 <p>注意：</p>
 <p>在本规范的前几个版本中，<strong>toString</strong>这个函数有时会被用来访问各种内置对象的名义类型标记<code>[[Class]]</code>的内部插槽的<strong>String</strong>值。上面<strong>toString</strong>函数保留了对以前一些特定类型内置对象的检测。但是对于其他内置对象或者预定义对象没有提供可靠的检测机制。针对这种情况，程序提供使用**@@toStringTag**的检测方式代替原来的类型检测方法。</p>
-<p>很明显<strong>toString</strong>方法在ES7内部产生了比较大的变化，具体体现4~16：</p>
+<p>很明显<strong>toString</strong>方法在ES7内部产生了比较大的变化，具体体现第4~16步：</p>
 <ol>
 <li>提供了专门判断数组的方法<strong>isArray</strong>。</li>
-<li>不再访问内置对象的<code>[[call]]</code>属性，而是一些特殊内置对象根据特殊标识标记，例如根据<strong>Arguments</strong>的<code>[[ParameterMap]]</code>内部插槽标记<code>&quot;Arguments&quot;</code>标识、根据<strong>Function</strong>的<code>[[ParameterMap]]</code>内部插槽标记<code>&quot;Function&quot;</code>标识等等（这里我认为内部卡槽可以简单理解为标识或属性）。</li>
+<li>不再访问内置对象的<code>[[call]]</code>属性，而是根据一些特殊内部插槽判断内置对象，例如根据<strong>Arguments</strong>的<code>[[ParameterMap]]</code>内部插槽标记<code>&quot;Arguments&quot;</code>标识、根据<strong>Function</strong>的<code>[[ParameterMap]]</code>内部插槽标记<code>&quot;Function&quot;</code>标识等等（这里我认为内部卡槽可以简单理解为标识或属性）。</li>
 <li>一部分老的内置对象和新增的内置对象都有<code>@@toStringTag</code>属性值，例如<strong>JSON</strong>、<strong>Symbol</strong>、<strong>Map</strong>、<strong>Set</strong>、<strong>WeekMap</strong>、<strong>WeekSet</strong>、<strong>ArrayBuffer</strong>、<strong>DataView</strong>、<strong>Promise</strong>。</li>
-<li>统一获取对象的<code>@@toStringTag</code>或者内部标识。</li>
+<li>获取对象的<code>@@toStringTag</code>或者内部标识的字符串值。</li>
 </ol>
 <h4 id="如何让objectprototypetostring方法识别自定义对象"><a class="markdownIt-Anchor" href="#如何让objectprototypetostring方法识别自定义对象"></a> 如何让<code>Object.prototype.toString</code>方法识别自定义对象</h4>
 <p>看下面的代码：</p>
