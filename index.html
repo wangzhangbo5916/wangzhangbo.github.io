@@ -476,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-21 20:54:51" itemprop="dateModified" datetime="2023-03-21T20:54:51+08:00">2023-03-21</time>
+                <time title="修改时间：2023-03-22 20:41:30" itemprop="dateModified" datetime="2023-03-22T20:41:30+08:00">2023-03-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -494,14 +494,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -539,15 +539,60 @@
 <p>对于第2个问题，看一下下面代码，区分函数声明和函数表达式：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn1</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line"><span class="comment">// 函数表达式</span></span><br><span class="line"><span class="keyword">var</span> fn2 = <span class="keyword">function</span> (<span class="params"></span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
 <p>很明显函数表达式是变量声明的赋值操作，而变量提升只会提升变量声明而不会提升赋值操作，所以<strong>函数表达式不会被提升</strong>。</p>
-<h4 id="变量提升的原因"><a class="markdownIt-Anchor" href="#变量提升的原因"></a> 变量提升的原因</h4>
+<p><strong>下面总结变量提升的过程：</strong></p>
+<ol>
+<li><strong>在当前作用域查找所有的变量声明和函数声明，把这些声明都提到最前面，函数声明在变量声明之前。</strong></li>
+<li><strong>如果函数声明或者变量声明存在同名的，则同名的函数声明或者同名变量声明都是后者覆盖前者，但是变量声明和函数声明同名，变量声明不能覆盖函数声明。</strong></li>
+</ol>
+<h4 id="变量提升的优点"><a class="markdownIt-Anchor" href="#变量提升的优点"></a> 变量提升的优点</h4>
+<p>看下面的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isEven</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">isOdd</span>(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">alert</span>(<span class="title function_">isEven</span>(<span class="number">2</span>));</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isOdd</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">isEven</span>(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设没有变量提升，那么代码会怎么执行哪？</p>
+<ol>
+<li>定义函数<strong>isEven</strong>。</li>
+<li>调用<strong>isEven</strong>函数。</li>
+<li><strong>isEven</strong>函数执行的结果作为<strong>alert</strong>函数参数，执行alert函数。</li>
+<li>定义<strong>isOdd</strong>函数。</li>
+</ol>
+<p>但是在执行到第2步就报错了，因为在<strong>isEven</strong>函数中调用了<strong>isOdd</strong>函数，可以此时<strong>isOdd</strong>函数还没有定义，此时并不能使用。</p>
+<p>如何解决这个问题哪？</p>
+<p>其中的一个方案就是在执行前就在定义这些声明函数，这样代码执行时就不需要关心函数或者变量声明的顺序了，这就是<strong>变量提升</strong>。</p>
+<p>同时为了避免每次执行都需要进行这样的操作，JS引擎对此进行了优化，即在JS代码执行之前，会进行语法检查和预编译，并且这一操作只进行一次。</p>
+<p>再看一个demo：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> (n-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> foo = n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果没有变量提升，则会定义100此变量<strong>foo</strong>，其实并不需要定义这么多次。而因为变量提升的存在，代码等同于：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> foo;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> (n-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  foo = n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只定义了一次变量<strong>foo</strong>，对比没有变量提升来说，性能提升的很明显。</p>
+<p>再看一个demo：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>如果没有变量提升，上面的代码无疑会报错，但是有了变量提升，代码就可以正常执行了，虽然这是<strong>副作用</strong>，但是无疑提高了<strong>代码的容错性</strong>。</p>
+<p><strong>总结变量提升的优点：</strong></p>
+<ol>
+<li><strong>解决函数相互依赖问题。</strong></li>
+<li><strong>提高编译性能。</strong></li>
+<li><strong>提高代码容错性。</strong></li>
+</ol>
 <h4 id="变量提升的缺点"><a class="markdownIt-Anchor" href="#变量提升的缺点"></a> 变量提升的缺点</h4>
 <h4 id="解决变量提升"><a class="markdownIt-Anchor" href="#解决变量提升"></a> 解决变量提升</h4>
 <h4 id="暂时性死区"><a class="markdownIt-Anchor" href="#暂时性死区"></a> 暂时性死区</h4>
+<h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
+<ul>
+<li>
 <p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-declarations-and-the-variable-statement">let和const</a></p>
+</li>
+<li>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7007224479218663455">浅谈 JavaScript 变量提升</a></p>
+</li>
+<li>
 <p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting">变量提升</a></p>
+</li>
+<li>
 <p><a target="_blank" rel="noopener" href="http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/">Two words about “hoisting”</a></p>
+</li>
+<li>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904133355372558">JavaScript中的变量提升</a></p>
+</li>
+</ul>
 
       
     </div>
@@ -1012,19 +1057,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">14k</span>
+    <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12 分钟</span>
+    <span title="站点阅读时长">13 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共4.6k字</span>
+  <span class="post-count">博客全站共5.2k字</span>
 </div>
 
 
