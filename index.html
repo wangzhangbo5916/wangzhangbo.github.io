@@ -476,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-22 20:41:30" itemprop="dateModified" datetime="2023-03-22T20:41:30+08:00">2023-03-22</time>
+                <time title="修改时间：2023-03-27 20:42:41" itemprop="dateModified" datetime="2023-03-27T20:42:41+08:00">2023-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -494,14 +494,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -573,7 +573,42 @@
 <li><strong>提高代码容错性。</strong></li>
 </ol>
 <h4 id="变量提升的缺点"><a class="markdownIt-Anchor" href="#变量提升的缺点"></a> 变量提升的缺点</h4>
+<p>查看下面的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">showName</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="string">&quot;JavaScript&quot;</span></span><br><span class="line">  <span class="comment">// ...其他代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 新增代码开始</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">   	<span class="keyword">var</span> name = <span class="string">&quot;CSS&quot;</span></span><br><span class="line">  	<span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 新增代码结束</span></span><br><span class="line">  </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 执行结果：</span></span><br><span class="line">  <span class="comment">// CSS</span></span><br><span class="line">  <span class="comment">// CSS</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">showName</span>()</span><br></pre></td></tr></table></figure>
+<p>假设你在<strong>showName</strong>函数中新增一段代码，但是这段代码中你重新定义了<strong>name</strong>变量，新增的代码执行的结果符合预期，但是原来底部打印的结果却是变了。</p>
+<p>再看一个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i); </span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></table></figure>
+<p>循环执行完毕后，依然可以打印变量<strong>i</strong>，变量没有被及时销毁。</p>
+<p><strong>总结变量提升的缺点：</strong></p>
+<ol>
+<li><strong>变量提升导致使用变量或者函数时要特别注意变量是否重名和执行的时机，而且随着代码增加，风险越来越大，增加了开发成本和维护成本。</strong></li>
+<li><strong>变量提升扩大了变量和函数的使用范围，由于ES6之前不存在块级作用域，所以在for循环中声明的变量或函数在执行完毕后依然可以使用。（不仅是for循环，while循环，try，finally等也存在这种情况）</strong></li>
+</ol>
 <h4 id="解决变量提升"><a class="markdownIt-Anchor" href="#解决变量提升"></a> 解决变量提升</h4>
+<p>在上面的一节已经说明变量提升的缺点，那么如何解决这个问题哪？</p>
+<p>ES6给出的方案是使用<strong>let</strong>和<strong>const</strong>声明变量，查看下面代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">showName</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> name = <span class="string">&quot;JavaScript&quot;</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// ...其他代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 新增代码开始</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">   	<span class="keyword">let</span> name = <span class="string">&quot;CSS&quot;</span></span><br><span class="line">  	<span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 新增代码结束</span></span><br><span class="line">  </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">showName</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行结果：</span></span><br><span class="line"><span class="comment">// CSS</span></span><br><span class="line"><span class="comment">// JavaScript</span></span><br></pre></td></tr></table></figure>
+<p>可以看到执行结果是正确的，<strong>if</strong>语句内部执行的代码没有影响到外部的<strong>name</strong>变量。</p>
+<p><strong>let</strong>和<strong>const</strong>声明变量可以如何做到的哪？</p>
+<p>可以先看一下<a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-1">ES5对于var变量的定义</a>：</p>
+<blockquote>
+<p>Every execution context has an associated <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-10.3">VariableEnvironment</a>. Variables and functions declared in ECMAScript code evaluated in an execution context are added as bindings in that <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-10.3">VariableEnvironment</a>’s <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-10.2.1">Environment Record</a>. For function code, parameters are also added as bindings to that <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-10.2.1">Environment Record</a>.、</p>
+<p>A variable statement declares variables that are created as defined in <a target="_blank" rel="noopener" href="https://262.ecma-international.org/5.1/#sec-10.5">10.5</a>. Variables are initialised to <strong>undefined</strong> when created. A variable with an <em>Initialiser</em> is assigned the value of its <em>AssignmentExpression</em> when the <em>VariableStatement</em> is executed, not when the variable is created.</p>
+</blockquote>
+<p>翻译过来：</p>
+<p>每个执行上下文都关联一个变量环境。ES6之前的代码执行时会把变量声明或者函数声明绑定到一个变量环境的环境记录。对于函数代码，参数也会被绑定到这个环境记录。</p>
+<p>一个变量声明语句的变量在定义时就会在执行上下文的变量环境被创建。变量在创建时被初始化为<strong>undefined</strong>。变量的初始化器被赋值表达式分配值是在变量声明执行时而不是创建时。</p>
+<p>然后看一下<a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-let-and-const-declarations">ES6对于let和const的定义</a>：</p>
+<blockquote>
+<p><code>let</code> and <code>const</code> declarations define variables that are scoped to <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-execution-contexts">the running execution context</a>’s <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-execution-contexts">LexicalEnvironment</a>. The variables are created when their containing <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-lexical-environments">Lexical Environment</a> is instantiated but may not be accessed in any way until the variable’s <em>LexicalBinding</em> is evaluated. A variable defined by a <em>LexicalBinding</em> with an <em>Initializer</em> is assigned the value of its <em>Initializer</em>’s <em>AssignmentExpression</em> when the <em>LexicalBinding</em> is evaluated, not when the variable is created. If a <em>LexicalBinding</em> in a <code>let</code> declaration does not have an <em>Initializer</em> the variable is assigned the value <strong>undefined</strong> when the <em>LexicalBinding</em> is evaluated.</p>
+</blockquote>
+<p>翻译过来：</p>
+<p>let和const声明定义的变量属于执行上下文的词法环境作用域。当这些变量包含的词法环境被实例化后才会被创建，但是在这些变量执行词法绑定之前不能被访问。当词法绑定执行时，带着初始化器的词法绑定定义的变量会被初始化赋值表达式赋值分配值，而不是变量被创建的时候。如果一个词法绑定的let表达式声明的变量时没有初始化，则词法绑定执行时默认分配一个undefined作为变量的值。</p>
+<p><strong>上面两种声明方式的区别在于</strong>：</p>
+<ol>
+<li><strong>变量提升中的变量声明都是在变量环境中创建的，而let和const声明的变量在词法环境创建。</strong></li>
+<li><strong>变量提升中的变量声明在定义时就被初始化了，而let和const声明只有执行时才会被初始化，如果let默认没有赋值，则初始化分类一个undefined的值。</strong></li>
+</ol>
 <h4 id="暂时性死区"><a class="markdownIt-Anchor" href="#暂时性死区"></a> 暂时性死区</h4>
 <h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
 <ul>
@@ -1057,19 +1092,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">17k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+    <span title="站点阅读时长">16 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共5.2k字</span>
+  <span class="post-count">博客全站共6.3k字</span>
 </div>
 
 
