@@ -476,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-27 20:42:41" itemprop="dateModified" datetime="2023-03-27T20:42:41+08:00">2023-03-27</time>
+                <time title="修改时间：2023-03-27 20:44:45" itemprop="dateModified" datetime="2023-03-27T20:44:45+08:00">2023-03-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -606,8 +606,8 @@
 <p>let和const声明定义的变量属于执行上下文的词法环境作用域。当这些变量包含的词法环境被实例化后才会被创建，但是在这些变量执行词法绑定之前不能被访问。当词法绑定执行时，带着初始化器的词法绑定定义的变量会被初始化赋值表达式赋值分配值，而不是变量被创建的时候。如果一个词法绑定的let表达式声明的变量时没有初始化，则词法绑定执行时默认分配一个undefined作为变量的值。</p>
 <p><strong>上面两种声明方式的区别在于</strong>：</p>
 <ol>
-<li><strong>变量提升中的变量声明都是在变量环境中创建的，而let和const声明的变量在词法环境创建。</strong></li>
-<li><strong>变量提升中的变量声明在定义时就被初始化了，而let和const声明只有执行时才会被初始化，如果let默认没有赋值，则初始化分类一个undefined的值。</strong></li>
+<li><strong>变量提升中的变量声明都是在变量环境中创建，而let和const声明的变量在词法环境创建。</strong></li>
+<li><strong>变量提升中的变量声明在定义时就被初始化了，而let和const声明只有执行时才会被初始化，如果let默认没有赋值，则初始化分类一个undefined的值，并且如果没有被词法绑定前是不能访问的。</strong></li>
 </ol>
 <h4 id="暂时性死区"><a class="markdownIt-Anchor" href="#暂时性死区"></a> 暂时性死区</h4>
 <h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
