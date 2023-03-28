@@ -476,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-27 20:45:51" itemprop="dateModified" datetime="2023-03-27T20:45:51+08:00">2023-03-27</time>
+                <time title="修改时间：2023-03-28 20:52:34" itemprop="dateModified" datetime="2023-03-28T20:52:34+08:00">2023-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -494,14 +494,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
+              <span>6.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -604,29 +604,74 @@
 </blockquote>
 <p>翻译过来：</p>
 <p>let和const声明定义的变量属于执行上下文的词法环境作用域。当这些变量包含的词法环境被实例化后才会被创建，但是在这些变量执行词法绑定之前不能被访问。当词法绑定执行时，带着初始化器的词法绑定定义的变量会被初始化赋值表达式赋值分配值，而不是变量被创建的时候。如果一个词法绑定的let表达式声明的变量时没有初始化，则词法绑定执行时默认分配一个undefined作为变量的值。</p>
+<blockquote>
+<p><strong>Table 23</strong> <strong>— Additional State Components for ECMAScript Code Execution Contexts</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>Component</strong></th>
+<th><strong>Purpose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LexicalEnvironment</td>
+<td>Identifies the <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-lexical-environments">Lexical Environment</a> used to resolve identifier references made by code within this execution context.</td>
+</tr>
+<tr>
+<td>VariableEnvironment</td>
+<td>Identifies the <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-lexical-environments">Lexical Environment</a> whose <a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-lexical-environments">EnvironmentRecord</a> holds bindings created by <em>VariableStatements</em> within this execution context.</td>
+</tr>
+</tbody>
+</table>
+<p>The LexicalEnvironment and VariableEnvironment components of an execution context are always Lexical Environments. When an execution context is created its LexicalEnvironment and VariableEnvironment components initially have the same value.</p>
+</blockquote>
+<p><strong>在 ES6 中，LexicalEnvironment 组件和 VariableEnvironment 组件的区别在于前者用于存储函数声明和变量（ <code>let</code> 和 <code>const</code> ）绑定，而后者仅用于存储变量（ <code>var</code> ）绑定。</strong></p>
+<p><strong>变量环境</strong>只有<strong>全局和函数作用域</strong>，<strong>词法环境</strong>则是有<strong>全局、块、函数</strong>。</p>
 <p><strong>上面两种声明方式的区别在于</strong>：</p>
 <ol>
 <li><strong>变量提升中的变量声明都是在变量环境中创建，而let和const声明的变量在词法环境创建。</strong></li>
 <li><strong>变量提升中的变量声明在定义时就被初始化了，而let和const声明只有执行时才会被初始化，如果let默认没有赋值，则初始化分类一个undefined的值，并且如果没有被词法绑定前是不能访问的。</strong></li>
+<li><strong>let和const支持块级作用域，而var不支持块级作用域。</strong></li>
+</ol>
+<p>那下面的demo举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">let</span> b = <span class="number">3</span></span><br><span class="line">      <span class="keyword">var</span> c = <span class="number">4</span></span><br><span class="line">      <span class="keyword">let</span> d = <span class="number">5</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(b)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b) </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(c)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(d)</span><br><span class="line">&#125;   </span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></table></figure>
+<p><strong>第一步：编译并创建执行上下文</strong></p>
+<ol>
+<li>编译并创建上下文。</li>
+<li>通过 var 声明的变量，在编译阶段会被存放到<strong>变量环境</strong>中，并初始化为undefined。</li>
+<li>通过 let 声明的变量，在编译阶段会被存放到<strong>词法环境</strong>中，不进行初始化。</li>
+<li>此时函数内部的块级作用域的<code>let</code>声明的变量并没有在编译阶段放到<strong>词法环境</strong>中。</li>
+</ol>
+<p><strong>第二步：继续执行代码</strong></p>
+<ol>
+<li>当执行到代码块里面时，变量环境中a的值已经被设置成了1，词法环境中b的值已经被设置成了2。</li>
+<li>当进入函数的块级作用域块时，<strong>作用域块中通过let声明的变量，会被存放在词法环境的一个单独的区域中，这个区域中的变量并不影响作用域块外面的变量</strong>，比如在作用域外面声明了变量b，在该作用域块内部也声明了变量b，当执行到作用域内部时，它们都是独立的存在。</li>
+<li>在词法环境内部，维护了一个小型栈结构，栈底是函数最外层的变量（通过let或者const声明），进入一个作用域块后，就会把该作用域块内部的变量（（通过let或者const声明））压到栈顶；当作用域执行完成之后，该作用域的信息就会从栈顶弹出，这就是词法环境的结构</li>
+</ol>
+<p><strong>第三步：打印</strong></p>
+<ol>
+<li>当执行到作用域块中的console.log(a)这行代码时，就需要在词法环境和变量环境中查找变量a的值了，具体查找方式是：沿着词法环境的栈顶向下查询，如果在词法环境中的某个块中查找到了，就直接返回给JavaScript引擎，如果没有查找到，那么继续在变量环境中查找。</li>
+</ol>
+<p><strong>第四步：执行完后</strong></p>
+<ol>
+<li>
+<p>当作用域块执行结束之后，其内部定义的变量就会从词法环境的栈顶弹出</p>
+<p>console.log(d)：Uncaught ReferenceError</p>
+</li>
+<li>
+<p><strong>块级作用域就是通过词法环境的栈结构来实现的</strong>，而<strong>变量提升是通过变量环境来实现</strong>，通过这两者的结合，JavaScript引擎也就同时支持了变量提升和块级作用域了。</p>
+</li>
 </ol>
 <h4 id="暂时性死区"><a class="markdownIt-Anchor" href="#暂时性死区"></a> 暂时性死区</h4>
 <h4 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h4>
 <ul>
-<li>
-<p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-declarations-and-the-variable-statement">let和const</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7007224479218663455">浅谈 JavaScript 变量提升</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting">变量提升</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/">Two words about “hoisting”</a></p>
-</li>
-<li>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904133355372558">JavaScript中的变量提升</a></p>
-</li>
+<li><a target="_blank" rel="noopener" href="https://262.ecma-international.org/6.0/#sec-declarations-and-the-variable-statement">let和const</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7007224479218663455">浅谈 JavaScript 变量提升</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting">变量提升</a></li>
+<li><a target="_blank" rel="noopener" href="http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/">Two words about “hoisting”</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904133355372558">JavaScript中的变量提升</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7116095340859621412">ES6：理解词法环境和变量环境</a></li>
 </ul>
 
       
@@ -1092,19 +1137,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">17k</span>
+    <span title="站点总字数">19k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16 分钟</span>
+    <span title="站点阅读时长">17 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共6.3k字</span>
+  <span class="post-count">博客全站共7.1k字</span>
 </div>
 
 
