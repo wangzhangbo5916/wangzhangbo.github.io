@@ -752,7 +752,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-08 21:29:09" itemprop="dateModified" datetime="2023-05-08T21:29:09+08:00">2023-05-08</time>
+                <time title="修改时间：2023-05-16 20:37:25" itemprop="dateModified" datetime="2023-05-16T20:37:25+08:00">2023-05-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -770,14 +770,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -795,7 +795,86 @@
 <p>但是这样是否安全哪？假设团队的小伙伴不知道这个逻辑，他在一个子系统中也遇到了多个页面使用管理员信息，那么他的做法也是类似上面</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">getAdminUserInfo</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url.<span class="property">getAdminUserInfo</span>)</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">userInfo</span> = res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAdminUserInfo</span>();</span><br></pre></td></tr></table></figure>
 <p>此时当访问这个子系统后，其他子系统拿到的就不是登录人员信息，而是管理员信息，其他系统都会出现人员信息错误，造成严重的问题。</p>
-<p>如何解决这个问题哪？假设自己可以设置一个唯一的值，是不是就可以避免这种问题哪？这就是Symbol的使用场景。</p>
+<p>这个场景抽象成一个问题：<strong>假设需要在一个公共对象上添加方法或者属性，如何保证方法或者属性值不被更改？</strong></p>
+<p>要实现上述的功能有四种方案：</p>
+<ol>
+<li>使用Object.freeze()冻结对象</li>
+<li>使用Object.seal()密封对象</li>
+<li>使用Object.definePropery()设置一个不能修改的属性</li>
+<li>使用Symbol定义对象的属性</li>
+</ol>
+<p>那么这些方案有什么区别哪？</p>
+<h5 id="objectfreeze"><a class="markdownIt-Anchor" href="#objectfreeze"></a> Object.freeze()</h5>
+<p>Object.freeze()是JavaScript中的一个对象方法，可以用于冻结一个对象，使其属性不能被添加、删除或修改。</p>
+<p>使用Object.freeze()方法冻结一个对象后，该对象的属性将变得只读，不能再被修改。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">prop1</span>: <span class="string">&#x27;value1&#x27;</span>,</span><br><span class="line">  <span class="attr">prop2</span>: <span class="string">&#x27;value2&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">freeze</span>(obj);</span><br><span class="line"></span><br><span class="line">obj.<span class="property">prop1</span> = <span class="string">&#x27;new value&#x27;</span>; <span class="comment">// 此次赋值无效，因为obj已被冻结</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">prop1</span>); <span class="comment">// 输出&#x27;value1&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，obj对象被冻结后，尝试对obj.prop1重新赋值，但是赋值无效，因为obj已被冻结。最后输出obj.prop1的值，结果为’value1’。</p>
+<p>需要注意的是，即使一个对象被冻结，它的属性也可以被通过prototype链继承的prototype上的setter函数更改。因此，如果需要完全保护一个对象的属性，可以使用Object.seal()方法或Object.defineProperty()方法来禁止向原型链上添加或删除属性。</p>
+<p>总之，Object.freeze()方法能够有效地保护JavaScript对象，防止它们的属性被意外修改。</p>
+<h5 id="objectseal"><a class="markdownIt-Anchor" href="#objectseal"></a> Object.seal()</h5>
+<p>Object.seal()是JavaScript中的一个对象方法，可以用于密封（seal）一个对象，密封后的对象不能被添加新属性，不能删除已有属性，但是可以修改已有属性的值。</p>
+<p>使用Object.seal()方法密封一个对象后，该对象的属性将不能够被添加或删除，但是可以修改已有属性的值。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">prop1</span>: <span class="string">&#x27;value1&#x27;</span>,</span><br><span class="line">  <span class="attr">prop2</span>: <span class="string">&#x27;value2&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">seal</span>(obj);</span><br><span class="line"></span><br><span class="line">obj.<span class="property">prop1</span> = <span class="string">&#x27;new value&#x27;</span>; <span class="comment">// 此次赋值有效</span></span><br><span class="line">obj.<span class="property">prop3</span> = <span class="string">&#x27;value3&#x27;</span>; <span class="comment">// 此次添加属性无效，因为obj已被密封</span></span><br><span class="line"><span class="keyword">delete</span> obj.<span class="property">prop2</span>; <span class="comment">// 此次删除属性无效，因为obj已被密封</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj); <span class="comment">// 输出 &#123; prop1: &#x27;new value&#x27;, prop2: &#x27;value2&#x27; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，obj对象被密封后，尝试对obj.prop1重新赋值是有效的。但是尝试添加属性(prop3)或者删除属性(prop2)，操作无效。最后输出obj对象，结果为{ prop1: ‘new value’, prop2: ‘value2’ }，可以看出密封了obj对象后，属性(prop1, prop2)的值发生了变化，属性(prop3)是无效的。</p>
+<p>需要注意的是，密封一个对象并不会影响其属性的可枚举性（enumerability）。在上面的例子中，虽然obj被密封，但是它的属性prop1和prop2都可以被枚举。如果需要禁止属性的枚举，可以使用Object.defineProperty()方法来定义属性时设置enumerable属性为false。</p>
+<h5 id="objectdefineproperty"><a class="markdownIt-Anchor" href="#objectdefineproperty"></a> Object.defineProperty()</h5>
+<p>Object.defineProperty() 是 JavaScript 对象中的一个方法，它可以定义一个新属性或者修改一个已有属性的特性。这个方法通常被用来实现对象的数据绑定和对象的保护。</p>
+<p>该方法可以被调用来给一个已存在的对象添加一个新属性，或修改一个已有属性的特性，比如修改属性的值、可枚举性、可写性等。</p>
+<p>要定义一个不可修改的属性，可以使用 Object.defineProperty() 方法，并将可写性 (writable) 和可配置性 (configurable) 设置为 false。</p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(obj, <span class="string">&#x27;prop&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">value</span>: <span class="number">42</span>,</span><br><span class="line">  <span class="attr">writable</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">enumerable</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">configurable</span>: <span class="literal">false</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">prop</span>); <span class="comment">// 输出 42</span></span><br><span class="line"></span><br><span class="line">obj.<span class="property">prop</span> = <span class="number">65</span>; <span class="comment">// 什么也不做，因为该属性是不可写的</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">prop</span>); <span class="comment">// 输出 42</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> obj.<span class="property">prop</span>; <span class="comment">// 什么也不做，因为该属性是不可删除的</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">prop</span>); <span class="comment">// 输出 42</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，我们定义了一个名为 <code>prop</code> 的属性，并将其可写性和可配置性都设置为 false。这意味着该属性不可修改或删除。</p>
+<p>当我们试图修改该属性时，就会被忽略。这也就是为什么上面的代码中 <code>obj.prop</code> 的值没有被修改为 65。</p>
+<p>同样，当我们试图删除该属性时，也会被忽略。这也就是为什么上面代码中 <code>obj.prop</code> 仍然存在并输出 42。</p>
+<p>总之，如果想要定义一个不可修改的属性，需要将其可写性和可配置性都设置为 false。这样做可以保护对象中重要的属性免受意外修改或删除的影响。</p>
+<h5 id="symbol"><a class="markdownIt-Anchor" href="#symbol"></a> Symbol</h5>
+<p>Symbol 是 ES6 中新增的一种基本数据类型，用于表示独一无二的值。</p>
+<p>Symbol 的创建方式非常简单，只需要调用全局的 <code>Symbol()</code> 函数即可，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySymbol = <span class="title class_">Symbol</span>();</span><br></pre></td></tr></table></figure>
+<p>Symbol 通常用于定义对象的属性名，因为每个 Symbol 都是独一无二的，这可以保证对象的属性名是唯一的，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySymbol = <span class="title class_">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">obj[mySymbol] = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj[mySymbol]); <span class="comment">// 输出 &quot;hello&quot;</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码中，我们使用了一个 Symbol 作为对象的属性名，并将其赋值为 “hello”。当我们读取这个属性的值时，需要使用相同的 Symbol 作为键，才能获取到它的值。</p>
+<p>当然，Symbol 也可以接受一个可选的字符串作为参数，用于描述这个 Symbol 的作用，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mySymbol = <span class="title class_">Symbol</span>(<span class="string">&#x27;my description&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>这可以帮助开发者更好地理解这个 Symbol 的作用，但并不影响它的独一无二性。</p>
+<p>除此之外，Symbol 还有一些内置属性，例如 Symbol.iterator、Symbol.toStringTag 等，它们可以用于重写对象的默认行为，从而实现自定义的函数和属性。</p>
+<p>总之，Symbol 是一个非常有用的数据类型，可以帮助我们更好地实现对象的属性命名和自定义行为。</p>
+<h5 id="总结上述方案的优缺点"><a class="markdownIt-Anchor" href="#总结上述方案的优缺点"></a> 总结上述方案的优缺点</h5>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Object.freeze()</td>
+<td>可以保护对象不被篡改</td>
+<td>对象不能新增、修改、删除属性，使用时影响整个对象</td>
+</tr>
+<tr>
+<td>Object.seal()</td>
+<td>可以保护对象不被篡改、可以修改对象的属性值</td>
+<td>对象不能新增、删除属性，使用时影响整个对象</td>
+</tr>
+<tr>
+<td>Object.defineProperty()</td>
+<td>只影响对象的指定属性、可以自由配置对象属性是否可以修改或者删除</td>
+<td>定义比较麻烦，需要明确属性的配置参数</td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>只会影响对象的指定属性，使用简单灵活</td>
+<td>访问时需要明确属性值，比较麻烦</td>
+</tr>
+</tbody>
+</table>
+<p>综上对比，当给一个对象添加一个唯一属性时，使用Symbol更合适；当定义对象的属性值的行为时，使用Object.defineProperty()更合适；当保护对象不被篡改时，如果对象不能被修改，则使用Object.freeze()，否则使用Object.seal()。</p>
+<p>再回到上面的问题：<strong>为什么需要Symbol？</strong></p>
+<p>假设没有Symbol，解决<strong>假设需要在一个公共对象上添加方法或者属性，如何保证方法或者属性值不被更改？</strong>。那么只能使用前三种方案，但是这三种方案并不能满足需求。第一种和第二种会导致整个对象没有办法再次添加属性值，所以不太合适。第三种方案可以实现，但是有一个问题，不知道这个属性名重复了，需要添加后不能用才能发现，如果属性比较多的话，则需要思考一个新的不重复的属性名需要比较长的时间。所以为了解决这个问题，出现了Symbol这种数据结构，不需要考虑原来的属性值，只要使用Symbol创建的属性就是唯一的。</p>
+<h4 id="2symbol的使用"><a class="markdownIt-Anchor" href="#2symbol的使用"></a> 2.Symbol的使用</h4>
 <p>首先了解一下ES7官方文档中Symbol的定义</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-ecmascript-language-types-symbol-type">The Symbol Type</a></p>
@@ -809,9 +888,26 @@
 <p>每个不可变地Symbol值包含一个名为[[Description]]的关联值，该值要么是未定义的，要么是字符串值。</p>
 <p>下面是Symbol的常见用法：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明Symbol的值</span></span><br><span class="line"><span class="keyword">const</span> sym1 = <span class="title class_">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> sym2 = <span class="title class_">Symbol</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> sym3 = <span class="title class_">Symbol</span>(<span class="string">&#x27;symbol&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> sym4 = <span class="title class_">Symbol</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">const</span> sym5 = <span class="title class_">Symbol</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym1 === sym1);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym2 === sym2);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym3 === sym3);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym4 === sym4);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym5 === sym5);</span><br><span class="line"></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym1 === <span class="title class_">Symbol</span>());</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym2 === <span class="title class_">Symbol</span>(<span class="number">1</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym3 === <span class="title class_">Symbol</span>(<span class="string">&#x27;symbol&#x27;</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym4 === <span class="title class_">Symbol</span>(<span class="literal">true</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym5 === <span class="title class_">Symbol</span>(<span class="literal">null</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [<span class="title class_">Symbol</span>(<span class="string">&#x27;userInfo&#x27;</span>)]: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;symbol&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj[<span class="title class_">Symbol</span>(<span class="string">&#x27;userInfo&#x27;</span>)] = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;symbol2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//  [Symbol(userInfo)]: &#123; name: &#x27;symbol&#x27; &#125;,</span></span><br><span class="line"><span class="comment">//  [Symbol(userInfo)]: &#123; name: &#x27;symbol2&#x27; &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);</span><br></pre></td></tr></table></figure>
-<h4 id="2symbol为什么不能使用new"><a class="markdownIt-Anchor" href="#2symbol为什么不能使用new"></a> 2.Symbol为什么不能使用new?</h4>
-<h4 id="3symbol为什么是一个函数"><a class="markdownIt-Anchor" href="#3symbol为什么是一个函数"></a> 3.Symbol为什么是一个函数?</h4>
-<h4 id="4为什么js内置对象的属性要使用symbol"><a class="markdownIt-Anchor" href="#4为什么js内置对象的属性要使用symbol"></a> 4.为什么JS内置对象的属性要使用Symbol?</h4>
+<h4 id="3symbol为什么不能使用new"><a class="markdownIt-Anchor" href="#3symbol为什么不能使用new"></a> 3.Symbol为什么不能使用new?</h4>
+<p>Symbol使用时看着像是包装类，包装类可以使用new创建，但是为什么Symbol使用new时会报错？例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> num = <span class="keyword">new</span> <span class="title class_">Number</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> str = <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&#x27;string&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> sym = <span class="keyword">new</span> <span class="title class_">Symbol</span>(); <span class="comment">// Uncaught TypeError: Symbol is not a constructor</span></span><br></pre></td></tr></table></figure>
+<p><strong>因为Symbol没有包装类，Symbol使用时是调用的Symbol工厂函数</strong>，返回的结果是一个基础数据类型。</p>
+<p>因为Symbol没有包装类，所以不会进行自动封装或者解封。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为String可以自动封装，可以从基础数据类型转化为对象实例，所以可以调用String对象原型上的方法</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;hello&#x27;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str.<span class="property">length</span>); <span class="comment">// 5</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str.<span class="title function_">toUpperCase</span>()); <span class="comment">// HELLO</span></span><br></pre></td></tr></table></figure>
+<h4 id="4为什么要使用函数调用来创建-symbol-类型的值呢"><a class="markdownIt-Anchor" href="#4为什么要使用函数调用来创建-symbol-类型的值呢"></a> 4.为什么要使用函数调用来创建 <code>Symbol</code> 类型的值呢？</h4>
+<p><code>Symbol</code> 构造函数是 JavaScript 内置的构造函数之一，它是由 JavaScript 引擎实现的，其内部实现是无法完全模拟的。但是，我们可以从 ECMAScript 规范中了解到大致的实现过程。</p>
+<p>根据规范，<code>Symbol()</code> 构造函数接受一个可选的参数 <code>description</code>，用于为创建的 <code>Symbol</code> 值指定描述信息。<code>Symbol()</code> 构造函数返回一个新的 <code>Symbol</code> 值，每个 <code>Symbol</code> 值都是唯一的。</p>
+<p>在具体实现中，可以使用以下过程来模拟 <code>Symbol()</code> 构造函数的内部实现：</p>
+<ol>
+<li>创建一个新的 <code>Symbol</code> 值，通过 <code>SymbolDescriptiveString</code> 构造函数创建一个带有描述信息的 Symbol 类型的值。</li>
+<li>对于相同的描述信息，返回同一实例的 Symbol 类型的值。</li>
+<li>将创建的 <code>Symbol</code> 值的 <code>[[Description]]</code> 内部属性设置为参数 <code>description</code> 的值。</li>
+</ol>
+<p>下面是一个简单的示例代码，用于模拟 <code>Symbol()</code> 构造函数的内部实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个计数器</span></span><br><span class="line"><span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 SymbolDescriptiveString 函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">SymbolDescriptiveString</span>(<span class="params">description</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">count</span> = count++;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">description</span> = description;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">toString</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="string">`Symbol(<span class="subst">$&#123;<span class="variable language_">this</span>.description&#125;</span>)`</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 MySymbol 函数</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">MySymbol</span>(<span class="params">description</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span> <span class="keyword">instanceof</span> <span class="title class_">MySymbol</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">TypeError</span>(<span class="string">&#x27;Symbol is not a constructor&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果相同的描述信息已经存在，返回已有的 MySymbol</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> symbol <span class="keyword">of</span> <span class="title class_">MySymbol</span>.<span class="property">symbols</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (symbol.<span class="property">description</span> === description) &#123;</span><br><span class="line">      <span class="keyword">return</span> symbol;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新的 MySymbol 值</span></span><br><span class="line">  <span class="keyword">let</span> sym = <span class="keyword">new</span> <span class="title class_">SymbolDescriptiveString</span>(description);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加到 MySymbol 集合中</span></span><br><span class="line">  <span class="title class_">MySymbol</span>.<span class="property">symbols</span>.<span class="title function_">push</span>(sym);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回新创建的 Symbol 值</span></span><br><span class="line">  <span class="keyword">return</span> sym;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义 symbols 属性，用于存储已有的 MySymbol 值</span></span><br><span class="line"><span class="title class_">MySymbol</span>.<span class="property">symbols</span> = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置 MySymbol.prototype 属性</span></span><br><span class="line"><span class="title class_">MySymbol</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">toString</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`Symbol(<span class="subst">$&#123;<span class="variable language_">this</span>.description&#125;</span>)`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Symbol 工厂函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Symbol</span> = <span class="keyword">function</span> (<span class="params">str</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> sym = <span class="keyword">new</span> <span class="title class_">Symbol</span>(str)</span><br><span class="line">  <span class="keyword">return</span> sym;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成新的 Symbol 值</span></span><br><span class="line"><span class="keyword">let</span> sym1 = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> sym2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> sym3 = <span class="title class_">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出 Symbol 值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym1); <span class="comment">// Symbol(foo)</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym2); <span class="comment">// Symbol(bar)</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym3); <span class="comment">// Symbol(foo)</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是，这只是一个简单的模拟示例，用于说明 Symbol() 构造函数的实现原理，而非 Symbol() 实际的内部实现。在实际的 JavaScript 引擎中，Symbol() 构造函数的实现可能会更加高效和优化。</p>
+<p>从上述模拟Symbol可以大致了解Symbol的实现，Symbol实际上是一个对象，这个对象只是使用起来像一个基础数据类型，而创建对象的方式有多种多样，但是每个Symbol创建的实例对象都是独立的，这就需要使用类或者工厂函数。</p>
+<h4 id="5为什么js内置对象的属性要使用symbol"><a class="markdownIt-Anchor" href="#5为什么js内置对象的属性要使用symbol"></a> 5.为什么JS内置对象的属性要使用Symbol?</h4>
 <h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-ecmascript-language-types-symbol-type">The Symbol Type</a></li>
@@ -1197,19 +1293,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">22k</span>
+    <span title="站点总字数">28k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20 分钟</span>
+    <span title="站点阅读时长">25 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共8k字</span>
+  <span class="post-count">博客全站共10.8k字</span>
 </div>
 
 
