@@ -752,7 +752,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-07 19:31:11" itemprop="dateModified" datetime="2023-04-07T19:31:11+08:00">2023-04-07</time>
+                <time title="修改时间：2023-05-08 21:29:09" itemprop="dateModified" datetime="2023-05-08T21:29:09+08:00">2023-05-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -770,14 +770,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>43</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -789,12 +789,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="symbol数据类型解决了什么问题"><a class="markdownIt-Anchor" href="#symbol数据类型解决了什么问题"></a> Symbol数据类型解决了什么问题</h3>
+          <h4 id="1为什么需要symbol"><a class="markdownIt-Anchor" href="#1为什么需要symbol"></a> 1.为什么需要Symbol？</h4>
+<p>你是否遇到过这样的场景？在系统中有多个页面都需要获取登录人的信息，但是你不想每个页面都请求，一般都会在进入系统后请求一次登录人信息接口，然后缓存登录人的信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">getLoginUserInfo</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url.<span class="property">getLoginUserInfo</span>)</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">userInfo</span> = res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getLoginUserInfo</span>();</span><br></pre></td></tr></table></figure>
+<p>但是这样是否安全哪？假设团队的小伙伴不知道这个逻辑，他在一个子系统中也遇到了多个页面使用管理员信息，那么他的做法也是类似上面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">getAdminUserInfo</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(url.<span class="property">getAdminUserInfo</span>)</span><br><span class="line">  <span class="variable language_">window</span>.<span class="property">userInfo</span> = res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAdminUserInfo</span>();</span><br></pre></td></tr></table></figure>
+<p>此时当访问这个子系统后，其他子系统拿到的就不是登录人员信息，而是管理员信息，其他系统都会出现人员信息错误，造成严重的问题。</p>
+<p>如何解决这个问题哪？假设自己可以设置一个唯一的值，是不是就可以避免这种问题哪？这就是Symbol的使用场景。</p>
+<p>首先了解一下ES7官方文档中Symbol的定义</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-ecmascript-language-types-symbol-type">The Symbol Type</a></p>
+<p>The Symbol type is the set of all non-String values that may be used as the key of an Object property (<a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-object-type">6.1.7</a>).</p>
+<p>Each possible Symbol value is unique and immutable.</p>
+<p>Each Symbol value immutably holds an associated value called [[Description]] that is either undefined or a String value</p>
+</blockquote>
+<p>翻译一下：</p>
+<p>Symbol类型常作为对象的非字符串类型键的集合。</p>
+<p>每个可能是Symbol类型的值都是唯一且不可变的。</p>
+<p>每个不可变地Symbol值包含一个名为[[Description]]的关联值，该值要么是未定义的，要么是字符串值。</p>
+<p>下面是Symbol的常见用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明Symbol的值</span></span><br><span class="line"><span class="keyword">const</span> sym1 = <span class="title class_">Symbol</span>();</span><br><span class="line"><span class="keyword">const</span> sym2 = <span class="title class_">Symbol</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> sym3 = <span class="title class_">Symbol</span>(<span class="string">&#x27;symbol&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> sym4 = <span class="title class_">Symbol</span>(<span class="literal">true</span>);</span><br><span class="line"><span class="keyword">const</span> sym5 = <span class="title class_">Symbol</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym1 === sym1);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym2 === sym2);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym3 === sym3);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym4 === sym4);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym5 === sym5);</span><br><span class="line"></span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym1 === <span class="title class_">Symbol</span>());</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym2 === <span class="title class_">Symbol</span>(<span class="number">1</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym3 === <span class="title class_">Symbol</span>(<span class="string">&#x27;symbol&#x27;</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym4 === <span class="title class_">Symbol</span>(<span class="literal">true</span>));</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sym5 === <span class="title class_">Symbol</span>(<span class="literal">null</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [<span class="title class_">Symbol</span>(<span class="string">&#x27;userInfo&#x27;</span>)]: &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;symbol&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj[<span class="title class_">Symbol</span>(<span class="string">&#x27;userInfo&#x27;</span>)] = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;symbol2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//  [Symbol(userInfo)]: &#123; name: &#x27;symbol&#x27; &#125;,</span></span><br><span class="line"><span class="comment">//  [Symbol(userInfo)]: &#123; name: &#x27;symbol2&#x27; &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);</span><br></pre></td></tr></table></figure>
+<h4 id="2symbol为什么不能使用new"><a class="markdownIt-Anchor" href="#2symbol为什么不能使用new"></a> 2.Symbol为什么不能使用new?</h4>
+<h4 id="3symbol为什么是一个函数"><a class="markdownIt-Anchor" href="#3symbol为什么是一个函数"></a> 3.Symbol为什么是一个函数?</h4>
+<h4 id="4为什么js内置对象的属性要使用symbol"><a class="markdownIt-Anchor" href="#4为什么js内置对象的属性要使用symbol"></a> 4.为什么JS内置对象的属性要使用Symbol?</h4>
 <h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://262.ecma-international.org/7.0/#sec-ecmascript-language-types-symbol-type">The Symbol Type</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">MDN Symbol</a></li>
-<li></li>
 </ul>
 
       
@@ -1166,7 +1187,7 @@
 
 <div class="copyright">
   
-  &copy; Mon Feb 06 2023 08:00:00 GMT+0800 (中国标准时间) – 
+  &copy; Mon Feb 06 2023 08:00:00 GMT+0800 (China Standard Time) – 
   <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -1176,19 +1197,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">20k</span>
+    <span title="站点总字数">22k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">18 分钟</span>
+    <span title="站点阅读时长">20 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共7.5k字</span>
+  <span class="post-count">博客全站共8k字</span>
 </div>
 
 
