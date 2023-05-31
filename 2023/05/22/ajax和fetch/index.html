@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"wangzhangbo.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="ajax  fetch  ajax和fetch的区别  其他  MAN Ajax MDN fetch">
+  <meta name="description" content="ajax与XMLHttpRequest Ajax（Asynchronous JavaScript and XML）是一种用于创建动态Web应用程序的技术。它使用JavaScript和XMLHttpRequest对象来实现异步数据交互，从而避免了页面的刷新和重载，提高了用户体验。 Ajax本身不是一种技术，而是一种将一些现有技术结合起来使用的方法，包括：HTML 或 XHTML、CSS、JavaS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ajax和fetch">
 <meta property="og:url" content="https://wangzhangbo.top/2023/05/22/ajax%E5%92%8Cfetch/index.html">
 <meta property="og:site_name" content="博客">
-<meta property="og:description" content="ajax  fetch  ajax和fetch的区别  其他  MAN Ajax MDN fetch">
+<meta property="og:description" content="ajax与XMLHttpRequest Ajax（Asynchronous JavaScript and XML）是一种用于创建动态Web应用程序的技术。它使用JavaScript和XMLHttpRequest对象来实现异步数据交互，从而避免了页面的刷新和重载，提高了用户体验。 Ajax本身不是一种技术，而是一种将一些现有技术结合起来使用的方法，包括：HTML 或 XHTML、CSS、JavaS">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-22T11:44:41.000Z">
-<meta property="article:modified_time" content="2023-05-22T11:58:24.269Z">
+<meta property="article:modified_time" content="2023-05-31T12:36:32.559Z">
 <meta property="article:author" content="wangzhangbo">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -198,10 +198,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-05-22 19:44:41 / 修改时间：19:58:24" itemprop="dateCreated datePublished" datetime="2023-05-22T19:44:41+08:00">2023-05-22</time>
+              <time title="创建时间：2023-05-22 19:44:41" itemprop="dateCreated datePublished" datetime="2023-05-22T19:44:41+08:00">2023-05-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-31 20:36:32" itemprop="dateModified" datetime="2023-05-31T20:36:32+08:00">2023-05-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -225,14 +231,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>39</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -244,7 +250,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="ajax"><a class="markdownIt-Anchor" href="#ajax"></a> ajax</h4>
+        <h4 id="ajax与xmlhttprequest"><a class="markdownIt-Anchor" href="#ajax与xmlhttprequest"></a> ajax与XMLHttpRequest</h4>
+<p>Ajax（Asynchronous JavaScript and XML）是一种用于创建动态Web应用程序的技术。它使用JavaScript和XMLHttpRequest对象来实现异步数据交互，从而避免了页面的刷新和重载，提高了用户体验。</p>
+<p>Ajax本身不是一种技术，而是一种将一些现有技术结合起来使用的方法，包括：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML">HTML</a> 或 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/XHTML">XHTML</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS">CSS</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript">JavaScript</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model">DOM</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/XML">XML</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/XSLT">XSLT</a>、以及最重要的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest"><code>XMLHttpRequest</code></a> 对象。</p>
+<p>尽管 Ajax 中的 X 代表 XML，但是 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/JSON">JSON</a> 才是首选，因为它更加轻量，而且是用 JavaScript 编写的。在 Ajax 模型中，JSON 和 XML 都被用来包装信息。</p>
+<p>Ajax技术可以实现以下功能：</p>
+<ol>
+<li>异步加载数据：通过Ajax技术，可以在不刷新页面的情况下，向服务器发送请求并获取数据，然后将数据更新到页面中。</li>
+<li>动态更新页面：使用Ajax技术，可以动态更新页面的部分内容，而不需要刷新整个页面。</li>
+<li>表单验证：通过Ajax技术，可以在用户提交表单之前，使用JavaScript验证表单数据的有效性，并向用户提供及时的反馈。</li>
+<li>自动完成：使用Ajax技术，可以实现自动完成功能，即在用户输入关键字时，自动向服务器发送请求并获取匹配的数据。</li>
+<li>实时聊天：通过Ajax技术，可以实现实时聊天功能，即在不刷新页面的情况下，向服务器发送消息并接收其他用户的消息。</li>
+</ol>
+<h5 id="xmlhttprequest的异步模式和同步模式"><a class="markdownIt-Anchor" href="#xmlhttprequest的异步模式和同步模式"></a> XMLHttpRequest的异步模式和同步模式</h5>
+<p>XMLHttpRequest是一种用于创建异步Web应用程序的JavaScript API。它可以向服务器发送HTTP请求并接收响应，从而实现异步数据交互。XMLHttpRequest最初是由Microsoft开发的，后来成为W3C标准的一部分，现在被广泛应用于Web开发中。</p>
+<p><code>XMLHttpRequest</code> 对象的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/open">open()</a> 方法的第三个参数<code>async</code>的值决定的。如果该参数的值为 <code>false</code>，则该 <code>XMLHttpRequest</code>请求以同步模式进行，否则该过程将以异步模式完成。</p>
+<p>异步请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title function_">request</span> = (<span class="params">url, callback</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">var</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">  xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title function_">callback</span>(<span class="variable language_">this</span>.<span class="property">responseText</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">  xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url);</span><br><span class="line">  xhr.<span class="title function_">send</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">request</span>(<span class="string">&#x27;https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests&#x27;</span>, <span class="function">(<span class="params">text</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`text：<span class="subst">$&#123;text&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>同步请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">request</span> = (<span class="params">url</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">  xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url, <span class="literal">false</span>);</span><br><span class="line">  xhr.<span class="title function_">send</span>();</span><br><span class="line">  <span class="keyword">return</span> xhr.<span class="property">responseText</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> text = <span class="title function_">request</span>(<span class="string">&#x27;https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`text：<span class="subst">$&#123;text&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="xmlhttprequest如何判断请求成功"><a class="markdownIt-Anchor" href="#xmlhttprequest如何判断请求成功"></a> XMLHttpRequest如何判断请求成功</h5>
+<p>在使用XMLHttpRequest对象发送请求后，可以通过readyState和status属性来判断请求是否成功或失败。</p>
+<p>readyState属性表示XMLHttpRequest对象的状态，它有以下几个取值：</p>
+<ul>
+<li>0：未初始化。XMLHttpRequest对象已经创建，但尚未调用open方法。</li>
+<li>1：正在加载。XMLHttpRequest对象已经调用open方法，但尚未调用send方法。</li>
+<li>2：已加载。XMLHttpRequest对象已经调用send方法，但尚未接收到响应。</li>
+<li>3：交互中。XMLHttpRequest对象正在接收响应数据。</li>
+<li>4：完成。XMLHttpRequest对象已经接收到全部响应数据。</li>
+</ul>
+<p>status属性表示HTTP状态码，它有以下几个取值：</p>
+<ul>
+<li>200：请求成功。</li>
+<li>404：请求的资源不存在。</li>
+<li>500：服务器内部错误。</li>
+<li>其他状态码：其他HTTP状态码表示请求失败。</li>
+</ul>
+<p>因此，可以通过判断readyState和status属性的值来判断请求是否成功或失败。当readyState的值为4且status的值为200时，表示请求成功；当status的值为其他状态码时，表示请求失败。可以在XMLHttpRequest对象的onreadystatechange事件中进行判断，代码示例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (xhr.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; xhr.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="comment">// 请求成功</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 请求失败</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;example.com&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line">xhr.<span class="title function_">send</span>();</span><br></pre></td></tr></table></figure>
+<h5 id="监测xmlhttprequest进度"><a class="markdownIt-Anchor" href="#监测xmlhttprequest进度"></a> <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#%E7%9B%91%E6%B5%8B%E8%BF%9B%E5%BA%A6">监测XMLHttpRequest进度</a></h5>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oReq = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// progress 事件在使用 file: 协议的情况下是无效的</span></span><br><span class="line"><span class="comment">// 检索的数据量发生了变化</span></span><br><span class="line">oReq.<span class="title function_">addEventListener</span>(<span class="string">&quot;progress&quot;</span>, updateProgress);</span><br><span class="line"><span class="comment">// 传输完成，所有数据保存在 response 中</span></span><br><span class="line">oReq.<span class="title function_">addEventListener</span>(<span class="string">&quot;load&quot;</span> , transferComplete);</span><br><span class="line"><span class="comment">// 请求失败</span></span><br><span class="line">oReq.<span class="title function_">addEventListener</span>(<span class="string">&quot;error&quot;</span>, transferFailed  );</span><br><span class="line"><span class="comment">// 请求成功</span></span><br><span class="line">oReq.<span class="title function_">addEventListener</span>(<span class="string">&quot;abort&quot;</span>, transferCanceled);</span><br><span class="line"><span class="comment">// 使用 loadend 事件可以侦测到所有的三种加载结束条件（abort、load，或 error）</span></span><br><span class="line">req.<span class="title function_">addEventListener</span>(<span class="string">&quot;loadend&quot;</span>, loadEnd);</span><br><span class="line"></span><br><span class="line">oReq.<span class="title function_">open</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端到客户端的传输进程（下载）</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateProgress</span> (oEvent) &#123;</span><br><span class="line">  <span class="keyword">if</span> (oEvent.<span class="property">lengthComputable</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> percentComplete = oEvent.<span class="property">loaded</span> / oEvent.<span class="property">total</span> * <span class="number">100</span>;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 总大小未知时不能计算进程信息</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">transferComplete</span>(<span class="params">evt</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;The transfer is complete.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">transferFailed</span>(<span class="params">evt</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;An error occurred while transferring the file.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">transferCanceled</span>(<span class="params">evt</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;The transfer has been canceled by the user.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">loadEnd</span>(<span class="params">evt</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;The transfer finished (although we don&#x27;t know if it succeeded or not).&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="fetch"><a class="markdownIt-Anchor" href="#fetch"></a> fetch</h4>
 <h4 id="ajax和fetch的区别"><a class="markdownIt-Anchor" href="#ajax和fetch的区别"></a> ajax和fetch的区别</h4>
 <h4 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h4>
@@ -367,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax"><span class="nav-number">1.</span> <span class="nav-text"> ajax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch"><span class="nav-number">2.</span> <span class="nav-text"> fetch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax%E5%92%8Cfetch%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text"> ajax和fetch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text"> 其他</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax%E4%B8%8Exmlhttprequest"><span class="nav-number">1.</span> <span class="nav-text"> ajax与XMLHttpRequest</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#xmlhttprequest%E7%9A%84%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text"> XMLHttpRequest的异步模式和同步模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#xmlhttprequest%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E8%AF%B7%E6%B1%82%E6%88%90%E5%8A%9F"><span class="nav-number">1.2.</span> <span class="nav-text"> XMLHttpRequest如何判断请求成功</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%91%E6%B5%8Bxmlhttprequest%E8%BF%9B%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text"> 监测XMLHttpRequest进度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch"><span class="nav-number">2.</span> <span class="nav-text"> fetch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax%E5%92%8Cfetch%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text"> ajax和fetch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text"> 其他</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -437,19 +482,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">33k</span>
+    <span title="站点总字数">36k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">30 分钟</span>
+    <span title="站点阅读时长">33 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共13.5k字</span>
+  <span class="post-count">博客全站共14.7k字</span>
 </div>
 
 
