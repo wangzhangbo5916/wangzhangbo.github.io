@@ -195,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-10-08 19:40:41 / 修改时间：19:41:37" itemprop="dateCreated datePublished" datetime="2023-10-08T19:40:41+08:00">2023-10-08</time>
+              <time title="创建时间：2023-10-08 19:40:41" itemprop="dateCreated datePublished" datetime="2023-10-08T19:40:41+08:00">2023-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-10 19:31:09" itemprop="dateModified" datetime="2023-10-10T19:31:09+08:00">2023-10-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -215,14 +221,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -234,7 +240,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h3 id="js"><a class="markdownIt-Anchor" href="#js"></a> JS</h3>
+<h4 id="input"><a class="markdownIt-Anchor" href="#input"></a> Input</h4>
+<ol>
+<li>使用PC端组件库的Input组件时，注意如果Input组件的清除按钮不是click事件，则需要添加click事件</li>
+</ol>
+<h4 id="form"><a class="markdownIt-Anchor" href="#form"></a> Form</h4>
+<ol>
+<li>
+<p>表单设置表单项值时，如果当前表单是必填的，则需要校验必填。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置表单值</span></span><br><span class="line">form.<span class="title function_">setFieldsValue</span>(&#123; <span class="attr">formItemKey</span>: formItemValue &#125;);</span><br><span class="line"><span class="comment">// 校验设置的表单值</span></span><br><span class="line">form.<span class="title function_">validateFields</span>([formItemKey]);</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+<h3 id="css"><a class="markdownIt-Anchor" href="#css"></a> CSS</h3>
+<h4 id="通用"><a class="markdownIt-Anchor" href="#通用"></a> 通用</h4>
+<ol>
+<li>
+<p>在一些场景下需要在图片下面设置文字说明，但是即便文字与图片之间没有设置间距，也会有默认间距，此时想要去掉这个默认间距。可以给图片的父元素设置<code>font-size: 0;</code>，注意如果文字和图片是同一个父元素，则文字的<code>font-size</code>要明确声明。<a target="_blank" rel="noopener" href="https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-%E5%8E%BB%E9%99%A4%E9%97%B4%E8%B7%9D/">去除inline-block元素间间距的N种方法</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;figure className=&#123;`$&#123;BASE_CLASS_NAME&#125;-main-figure`&#125;&gt;</span><br><span class="line">  &lt;img className=&#123;`$&#123;BASE_CLASS_NAME&#125;-main-figure-image`&#125; src=&#123;logoImage&#125; alt=&quot;logo&quot; /&gt;</span><br><span class="line">  &lt;figcaption className=&#123;`$&#123;BASE_CLASS_NAME&#125;-main-figcaption`&#125;&gt;</span><br><span class="line">    &lt;h3 className=&#123;`$&#123;BASE_CLASS_NAME&#125;-main-figcaption-title`&#125;&gt;欢迎使用加班管理&lt;/h3&gt;</span><br><span class="line">    &lt;div className=&#123;`$&#123;BASE_CLASS_NAME&#125;-main-figcaption-desc`&#125;&gt;可以在移动端进行加班申请啦～&lt;/div&gt;</span><br><span class="line">  &lt;/figcaption&gt;</span><br><span class="line">&lt;/figure&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&amp;-<span class="selector-tag">figure</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 去掉img的行内元素间距</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line"></span><br><span class="line">  &amp;-image &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">42.67vw</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;-<span class="selector-tag">figcaption</span> &#123;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">12px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line"></span><br><span class="line">  &amp;-title &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: PingFangSC-Medium;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#111925</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">24px</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">500</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &amp;-desc &#123;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">4px</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: PingFangSC-Regular;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">17</span>, <span class="number">25</span>, <span class="number">37</span>, <span class="number">0.65</span>);</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">24px</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">400</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+<h4 id="移动端"><a class="markdownIt-Anchor" href="#移动端"></a> 移动端</h4>
+<ol>
+<li>
+<p>一些移动设备存在刘海屏和灵动岛，页面开发时需要避开这些内容，可以通过<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/env">css方法获取安全区域</a>，具体做法如下：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果获取安全距离失败，则默认采用这个</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="number">100vh</span>;</span><br><span class="line"><span class="comment">/* 兼容IOS版本&lt;11.2 */</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="built_in">constant</span>(safe-area-inset-bottom) - <span class="built_in">constant</span>(safe-area-inset-top));</span><br><span class="line"><span class="comment">/* 兼容IOS版本&gt;11.2 */</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="built_in">env</span>(safe-area-inset-bottom) - <span class="built_in">env</span>(safe-area-inset-top));</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+
       
     </div>
 
@@ -2202,19 +2239,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">73k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共41.3k字</span>
+  <span class="post-count">博客全站共41.9k字</span>
 </div>
 
 
