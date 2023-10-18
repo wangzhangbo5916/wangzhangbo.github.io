@@ -280,7 +280,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-10-18 19:35:35 / 修改时间：20:26:41" itemprop="dateCreated datePublished" datetime="2023-10-18T19:35:35+08:00">2023-10-18</time>
+              <time title="创建时间：2023-10-18 19:35:35 / 修改时间：20:31:14" itemprop="dateCreated datePublished" datetime="2023-10-18T19:35:35+08:00">2023-10-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,7 +298,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>612</span>
+              <span>710</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -320,10 +320,11 @@
           <h2 id="技术原理"><a class="markdownIt-Anchor" href="#技术原理"></a> 技术原理</h2>
 <h3 id="原理讲解"><a class="markdownIt-Anchor" href="#原理讲解"></a> 原理讲解</h3>
 <p><img src="/images/rolling_loading_principle.png" alt="滚动加载原理图" /></p>
-<p>上面的图片就是上划滚动加载时每一个距离的描述，当上划滚动时，滚动距离不断增加，剩余不断减少，可视区域不变，当剩余距离小于一个指定距离时就发出请求加载数据。</p>
+<p>上面的图片就是上划滚动加载时每一个距离的描述，当上划滚动时，滚动距离不断增加，剩余距离不断减少，可视区域高度一直不变，当剩余距离小于一个指定距离时就发出请求加载数据。</p>
 <h3 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现</h3>
 <p>使用伪代码实现上述过程：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 获取可视区域高度</span></span><br><span class="line"><span class="keyword">const</span> screenHeight = container?.<span class="property">offsetHeight</span>;</span><br><span class="line"><span class="comment">// 获取内容总高度</span></span><br><span class="line"><span class="keyword">const</span> elementHeight = element?.<span class="property">offsetHeight</span>;</span><br><span class="line"><span class="comment">// 设置指定高度，当剩余距离小于指定高度加载数据</span></span><br><span class="line"><span class="keyword">const</span> targetHeight = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">onScrollEvent</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 获取元素的滚动距离（垂直方向）</span></span><br><span class="line">  <span class="keyword">const</span> scrollDistance = element.<span class="property">scrollTop</span>;</span><br><span class="line">  <span class="comment">// 获取剩余距离</span></span><br><span class="line">  <span class="keyword">const</span> remainingDistance = elementHeight - screenHeight - scrollDistance;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (remainingDistance &lt; targetHeight) &#123;</span><br><span class="line">    <span class="comment">// 请求数据</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">container.<span class="title function_">addEventListener</span>(<span class="string">&#x27;scroll&#x27;</span>, onScrollEvent);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>注意：要实现上述的滚动加载，有几个前提条件，首先需要设置可视区域的高度，且可视区域不能禁止滚动，其次内容区域高度要大于可视区域高度，最后滚动的事件最好加上防抖处理，否则触发的频次太高。</p>
 <h2 id="应用场景"><a class="markdownIt-Anchor" href="#应用场景"></a> 应用场景</h2>
 <h3 id="实现一个上划滚动加载"><a class="markdownIt-Anchor" href="#实现一个上划滚动加载"></a> 实现一个上划滚动加载</h3>
 <h3 id="实现一个下划滚动加载"><a class="markdownIt-Anchor" href="#实现一个下划滚动加载"></a> 实现一个下划滚动加载</h3>
@@ -2143,7 +2144,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共42.2k字</span>
+  <span class="post-count">博客全站共42.3k字</span>
 </div>
 
 
