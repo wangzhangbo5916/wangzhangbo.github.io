@@ -30,7 +30,7 @@
 <meta property="og:description" content="JS  Input  使用PC端组件库的Input组件时，注意如果Input组件的清除按钮不是click事件，则需要添加click事件   Form   表单设置表单项值时，如果当前表单项是必填的，则需要校验表单项。 1234&#x2F;&#x2F; 设置表单值form.setFieldsValue(&amp;#123; formItemKey: formItemValue &amp;#125;);&#x2F;&#x2F; 校验设置的表单值form.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-08T11:40:41.000Z">
-<meta property="article:modified_time" content="2023-10-10T11:34:14.383Z">
+<meta property="article:modified_time" content="2023-10-16T11:01:02.159Z">
 <meta property="article:author" content="wangzhangbo">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="实践">
@@ -207,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 19:34:14" itemprop="dateModified" datetime="2023-10-10T19:34:14+08:00">2023-10-10</time>
+                <time title="修改时间：2023-10-16 19:01:02" itemprop="dateModified" datetime="2023-10-16T19:01:02+08:00">2023-10-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -280,7 +280,19 @@
 <p>一些移动设备存在刘海屏和灵动岛，页面开发时需要避开这些内容，可以通过<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/env">css方法获取安全区域</a>，具体做法如下：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果获取安全距离失败，则默认采用这个</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="number">100vh</span>;</span><br><span class="line"><span class="comment">/* 兼容IOS版本&lt;11.2 */</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="built_in">constant</span>(safe-area-inset-bottom) - <span class="built_in">constant</span>(safe-area-inset-top));</span><br><span class="line"><span class="comment">/* 兼容IOS版本&gt;11.2 */</span></span><br><span class="line"><span class="attribute">min-height</span>: <span class="built_in">calc</span>(<span class="number">100vh</span> - <span class="built_in">env</span>(safe-area-inset-bottom) - <span class="built_in">env</span>(safe-area-inset-top));</span><br></pre></td></tr></table></figure>
 </li>
-<li></li>
+</ol>
+<h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
+<h4 id="如何编写代码注释前端注释规范"><a class="markdownIt-Anchor" href="#如何编写代码注释前端注释规范"></a> 如何编写代码注释（[<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wjhaaa/p/16173067.html">前端注释规范</a>]）</h4>
+<ol>
+<li>注释不应与代码重复。</li>
+<li>好的注释不能成为不清晰代码的借口。</li>
+<li>如果不能写清楚的注释，可能是代码有问题。</li>
+<li>评论应该消除混乱，而不是引起混乱。</li>
+<li>在注释中解释单一的代码。</li>
+<li>提供复制代码的原始来源的链接。</li>
+<li>在最有帮助的地方包含指向外部参考的链接。</li>
+<li>修复错误时添加注释。</li>
+<li>使用注释来标记不完整的实现。</li>
 </ol>
 
     </div>
@@ -331,7 +343,10 @@
     <a href="/2023/08/30/%E4%B9%B0%E6%88%BF%E6%94%BB%E7%95%A5-%E9%80%89%E6%88%BF%E6%B5%81%E7%A8%8B/" rel="prev" title="买房攻略~选房流程">
       <i class="fa fa-chevron-left"></i> 买房攻略~选房流程
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/18/%E8%99%9A%E6%8B%9F%E5%88%97%E8%A1%A8%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/" rel="next" title="虚拟列表原理和应用">
+      虚拟列表原理和应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -395,7 +410,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#js"><span class="nav-number">1.</span> <span class="nav-text"> JS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#input"><span class="nav-number">1.1.</span> <span class="nav-text"> Input</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#form"><span class="nav-number">1.2.</span> <span class="nav-text"> Form</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css"><span class="nav-number">2.</span> <span class="nav-text"> CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> 通用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text"> 移动端</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#js"><span class="nav-number">1.</span> <span class="nav-text"> JS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#input"><span class="nav-number">1.1.</span> <span class="nav-text"> Input</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#form"><span class="nav-number">1.2.</span> <span class="nav-text"> Form</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css"><span class="nav-number">2.</span> <span class="nav-text"> CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> 通用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text"> 移动端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text"> 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E6%B3%A8%E9%87%8A%E5%89%8D%E7%AB%AF%E6%B3%A8%E9%87%8A%E8%A7%84%E8%8C%83"><span class="nav-number">3.1.</span> <span class="nav-text"> 如何编写代码注释（[前端注释规范]）</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -411,7 +426,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -477,7 +492,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共41.9k字</span>
+  <span class="post-count">博客全站共42k字</span>
 </div>
 
 
