@@ -286,7 +286,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-26 19:56:16" itemprop="dateModified" datetime="2023-10-26T19:56:16+08:00">2023-10-26</time>
+                <time title="修改时间：2023-10-30 20:03:22" itemprop="dateModified" datetime="2023-10-30T20:03:22+08:00">2023-10-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,14 +304,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -340,19 +340,56 @@
 <a target="_blank" rel="noopener" href="https://45wp6d.csb.app/">点击查看效果</a></p>
 <h3 id="实现一个左划滚动加载"><a class="markdownIt-Anchor" href="#实现一个左划滚动加载"></a> 实现一个左划滚动加载</h3>
 <p>左划和上划的原理相似，但是实现上有以下区别：</p>
-<p>1.滚动容器要设置宽度和横向滚动等样式</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.left-rolling-loading</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">750px</span>;</span><br><span class="line">  <span class="attribute">overflow-x</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.容器内容需要横向排列，不能换行</p>
+<ol>
+<li>
+<p>滚动容器要设置宽度和横向滚动等样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.left-rolling-loading</span> &#123;</span><br><span class="line">   <span class="attribute">width</span>: <span class="number">750px</span>;</span><br><span class="line">   <span class="attribute">overflow-x</span>: auto;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>容器内容需要横向排列，不能换行</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.left-rolling-loading</span> <span class="selector-class">.left-rolling-loading-list</span> &#123;</span><br><span class="line">  <span class="attribute">white-space</span>: nowrap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.获取内容的宽度方式与上划不同，上划取的是内容的高度，而左划取的是容器的滚动宽度</p>
+</li>
+<li>
+<p>获取内容的宽度方式与上划不同，上划取的是内容的高度，而左划取的是容器的滚动宽度</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取内容区域宽度</span></span><br><span class="line"><span class="keyword">const</span> scrollWidth = <span class="variable language_">this</span>.<span class="property">scrollElement</span>?.<span class="property">scrollWidth</span> || <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p>4.滚动距离获取的是<code>scrollLeft</code></p>
+</li>
+<li>
+<p>滚动距离获取的是<code>scrollLeft</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取滚动宽度</span></span><br><span class="line"><span class="keyword">const</span> containerScrollWidth = <span class="variable language_">this</span>.<span class="property">scrollElement</span>?.<span class="property">scrollLeft</span> || <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <p><a target="_blank" rel="noopener" href="https://github.com/wangzhangbo5916/code-demos/blob/main/react-demos/src/nodes/left-rolling-loading/index.jsx">点击查看代码</a><br />
 <a target="_blank" rel="noopener" href="https://m4p8zh.csb.app/">点击查看效果</a></p>
 <h3 id="实现一个上下划动滚动加载"><a class="markdownIt-Anchor" href="#实现一个上下划动滚动加载"></a> 实现一个上下划动滚动加载</h3>
+<p>上下划动比上划多了两个步骤：</p>
+<ol>
+<li>
+<p>判断划动的方向是上划还是下划</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [scrollRecord, setScrollRecord, getScrollRecord] = <span class="title function_">useGetState</span>(&#123;</span><br><span class="line">  <span class="attr">scrollTop</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">direction</span>: <span class="string">&#x27;top&#x27;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算滚动的方向，如果现在获取的滚动距离大于上一次的滚动距离则是上划，否则就是下划</span></span><br><span class="line"><span class="keyword">const</span> direction =</span><br><span class="line">    containerScrollHeight &gt; <span class="title function_">getScrollRecord</span>().<span class="property">scrollTop</span> ? <span class="string">&#x27;top&#x27;</span> : <span class="string">&#x27;bottom&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>当下划时如果距离小于目标距离，则内容的前面增加内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line"><span class="comment">// 如果上划时剩余距离小于指定距离或者下划时滚动距离小于指定距离，则加载数据</span></span><br><span class="line"><span class="keyword">if</span> (</span><br><span class="line">  (direction === <span class="string">&#x27;top&#x27;</span> &amp;&amp; remainingDistance &lt; <span class="variable constant_">SCROLL_LOADING_DISTANCE</span>) ||</span><br><span class="line">  (direction === <span class="string">&#x27;bottom&#x27;</span> &amp;&amp; containerScrollHeight &lt; remainingDistance)</span><br><span class="line">) &#123;</span><br><span class="line">  <span class="title function_">handleLoadData</span>();</span><br><span class="line">&#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="comment">// 上划时新增内容加到最后面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">getScrollRecord</span>().<span class="property">direction</span> === <span class="string">&#x27;top&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">setListData</span>([...list, ...res]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 下划时新增内容加到最前面</span></span><br><span class="line">  <span class="title function_">setListData</span>([...res, ...list]);</span><br><span class="line">&#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/wangzhangbo5916/code-demos/blob/main/react-demos/src/nodes/vertical-rolling-loading/index.jsx">点击查看代码</a><br />
+<a target="_blank" rel="noopener" href="https://k4s8v5.csb.app/">点击查看效果</a></p>
 <h3 id="实现一个左右划动滚动加载"><a class="markdownIt-Anchor" href="#实现一个左右划动滚动加载"></a> 实现一个左右划动滚动加载</h3>
-<h2 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h2>
+<p>左右划动与上下划动原理基本一致，也是在左划的基础上增加两个步骤：</p>
+<ol>
+<li>
+<p>判断划动的方向是左划还是右划</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> [scrollRecord, setScrollRecord, getScrollRecord] = <span class="title function_">useGetState</span>(&#123;</span><br><span class="line">  <span class="attr">scrollLeft</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">direction</span>: <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 计算滚动的方向，如果现在获取的滚动距离大于上一次的滚动距离则是左划，否则就是右划</span></span><br><span class="line"><span class="keyword">const</span> direction =</span><br><span class="line">containerScrollWidth &gt; <span class="title function_">getScrollRecord</span>().<span class="property">scrollLeft</span> ? <span class="string">&#x27;left&#x27;</span> : <span class="string">&#x27;right&#x27;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>当右划时如果距离小于目标距离，则内容的前面增加内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 计算滚动的方向，如果现在获取的滚动距离大于上一次的滚动距离则是左划，否则就是右划</span></span><br><span class="line"><span class="keyword">const</span> direction =</span><br><span class="line">  containerScrollWidth &gt; <span class="title function_">getScrollRecord</span>().<span class="property">scrollLeft</span> ? <span class="string">&#x27;left&#x27;</span> : <span class="string">&#x27;right&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果左划时剩余距离小于指定距离或者右划时滚动距离小于指定距离，则加载数据</span></span><br><span class="line"><span class="keyword">if</span> (</span><br><span class="line">  (direction === <span class="string">&#x27;left&#x27;</span> &amp;&amp; remainingDistance &lt; <span class="variable constant_">SCROLL_LOADING_DISTANCE</span>) ||</span><br><span class="line">  (direction === <span class="string">&#x27;right&#x27;</span> &amp;&amp; containerScrollWidth &lt; remainingDistance)</span><br><span class="line">) &#123;</span><br><span class="line">  <span class="title function_">handleLoadData</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">setScrollRecord</span>(&#123; <span class="attr">scrollLeft</span>: containerScrollWidth, direction &#125;);</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   </span><br><span class="line"><span class="comment">// 左划时新增内容加到最后面</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">getScrollRecord</span>().<span class="property">direction</span> === <span class="string">&#x27;left&#x27;</span>) &#123;</span><br><span class="line">  <span class="title function_">setListData</span>([...list, ...res]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// 右划时新增内容加到最前面</span></span><br><span class="line">  <span class="title function_">setListData</span>([...res, ...list]);</span><br><span class="line">&#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/wangzhangbo5916/code-demos/blob/main/react-demos/src/nodes/horizontal-rolling-loading/index.jsx">点击查看代码</a><br />
+<a target="_blank" rel="noopener" href="https://598hjm.csb.app/">点击查看效果</a></p>
 
       
     </div>
@@ -2154,19 +2191,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">75k</span>
+    <span title="站点总字数">77k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:08</span>
+    <span title="站点阅读时长">1:10</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共42.7k字</span>
+  <span class="post-count">博客全站共43.2k字</span>
 </div>
 
 
