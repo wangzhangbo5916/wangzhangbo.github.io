@@ -172,6 +172,168 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wangzhangbo.top/2024/04/01/%E5%AD%A6%E4%B9%A0VBA%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="wangzhangbo">
+      <meta itemprop="description" content="细节决定成败，习惯成就未来">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/01/%E5%AD%A6%E4%B9%A0VBA%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">学习VBA笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-01 19:39:14 / 修改时间：20:00:05" itemprop="dateCreated datePublished" datetime="2024-04-01T19:39:14+08:00">2024-04-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="vba-中的-thisworkbook-对象"><a class="markdownIt-Anchor" href="#vba-中的-thisworkbook-对象"></a> VBA 中的 ThisWorkbook 对象</h3>
+<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
+<p><code>ThisWorkbook</code>是 VBA（Visual Basic for Applications）中的一个内置对象，它代表了运行它的宏代码所在的工作簿。无论该工作簿是否是当前激活的工作簿，<code>ThisWorkbook</code>始终指向包含宏代码的那个工作簿。</p>
+<h4 id="使用场景"><a class="markdownIt-Anchor" href="#使用场景"></a> 使用场景</h4>
+<ol>
+<li><strong>引用工作簿本身</strong>：当你需要在宏中引用当前宏所在的工作簿，而不是当前激活的工作簿时，你应该使用<code>ThisWorkbook</code>。</li>
+<li><strong>避免混淆</strong>：如果你打开了多个工作簿，并且运行的宏可能影响多个工作簿，使用<code>ThisWorkbook</code>可以确保你的操作只会影响到包含宏的工作簿。</li>
+<li><strong>持久性操作</strong>：当你希望宏对工作簿进行的更改（如保存文件、修改属性等）与工作簿本身保持一致时，使用<code>ThisWorkbook</code>是一个好习惯。</li>
+</ol>
+<h4 id="示例代码"><a class="markdownIt-Anchor" href="#示例代码"></a> 示例代码</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sub SaveWorkbook()</span><br><span class="line">    &#x27; 使用ThisWorkbook对象保存当前包含宏的工作簿</span><br><span class="line">    ThisWorkbook.Save</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，不管哪个工作簿是活动的，<code>ThisWorkbook.Save</code>总是保存包含这段宏的工作簿。</p>
+<h4 id="与-activeworkbook-的区别"><a class="markdownIt-Anchor" href="#与-activeworkbook-的区别"></a> 与 ActiveWorkbook 的区别</h4>
+<p><code>ThisWorkbook</code>与<code>ActiveWorkbook</code>不同。<code>ActiveWorkbook</code>代表当前激活的工作簿，这可能是用户当前正在查看和操作的工作簿。如果你的宏代码需要对用户正在工作的工作簿进行操作，那么你应该使用<code>ActiveWorkbook</code>。</p>
+<p>使用<code>ThisWorkbook</code>是为了确保你的代码更加稳健，不会因为用户切换了活动工作簿而导致宏操作了错误的工作簿。</p>
+<h4 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h4>
+<ul>
+<li>在编写宏时，明确区分何时使用<code>ThisWorkbook</code>和何时使用<code>ActiveWorkbook</code>。</li>
+<li>如果宏与工作簿的特定内容（如工作表、范围等）相关联，使用<code>ThisWorkbook</code>可以确保引用的一致性。</li>
+<li>当你的宏需要在多个工作簿间共享或移植时，使用<code>ThisWorkbook</code>可以减少对特定工作簿环境的依赖。</li>
+</ul>
+<h3 id="vba-中的-thisworkbook-对象与多个工作簿"><a class="markdownIt-Anchor" href="#vba-中的-thisworkbook-对象与多个工作簿"></a> VBA 中的 ThisWorkbook 对象与多个工作簿</h3>
+<h4 id="工作原理"><a class="markdownIt-Anchor" href="#工作原理"></a> 工作原理</h4>
+<p>在 Excel 中，如果有多个工作簿同时打开，并且每个工作簿都含有 VBA 代码，<code>ThisWorkbook</code>对象在每个工作簿的 VBA 项目中都是独立的。<code>ThisWorkbook</code>始终指向其所属的那个工作簿的 VBA 项目。</p>
+<h4 id="对象指向"><a class="markdownIt-Anchor" href="#对象指向"></a> 对象指向</h4>
+<ol>
+<li><strong>独立性</strong>：每个工作簿的 VBA 项目中的<code>ThisWorkbook</code>对象相互独立，指向它们自己的工作簿。</li>
+<li><strong>代码执行上下文</strong>：当在某个工作簿的 VBA 环境中执行代码时，<code>ThisWorkbook</code>只会引用当前执行代码的工作簿。</li>
+</ol>
+<h4 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h4>
+<p>假设有两个工作簿：Workbook1.xlsm 和 Workbook2.xlsm，每个工作簿都有以下宏：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sub ShowWorkbookName()</span><br><span class="line">    MsgBox ThisWorkbook.Name</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当在 Workbook1.xlsm 的 VBA 环境中运行<code>ShowWorkbookName</code>宏时，弹出的消息框会显示&quot;Workbook1.xlsm&quot;。</li>
+<li>当在 Workbook2.xlsm 的 VBA 环境中运行<code>ShowWorkbookName</code>宏时，弹出的消息框会显示&quot;Workbook2.xlsm&quot;。</li>
+</ul>
+<h4 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h4>
+<ul>
+<li><code>ThisWorkbook</code>对象是上下文敏感的，它总是指向运行它的宏代码所在的工作簿。</li>
+<li>在每个工作簿的 VBA 代码中使用<code>ThisWorkbook</code>时，它总是指向该代码所在的工作簿，而不受其他工作簿的影响。</li>
+</ul>
+<h3 id="vba-中的-displaypagebreaks-属性"><a class="markdownIt-Anchor" href="#vba-中的-displaypagebreaks-属性"></a> VBA 中的 DisplayPageBreaks 属性</h3>
+<h4 id="定义与用途"><a class="markdownIt-Anchor" href="#定义与用途"></a> 定义与用途</h4>
+<p><code>DisplayPageBreaks</code>属性是一个与 Excel 工作表对象（Worksheet）相关的属性，它用于控制工作表中页面分隔符的显示。</p>
+<h4 id="功能描述"><a class="markdownIt-Anchor" href="#功能描述"></a> 功能描述</h4>
+<ol>
+<li><strong>显示控制</strong>：当<code>DisplayPageBreaks</code>属性设置为<code>True</code>时，工作表中的页面分隔符会在 Excel 界面上显示出来，允许用户看到打印时每页的边界。</li>
+<li><strong>隐藏分隔符</strong>：如果设置为<code>False</code>，则页面分隔符不会显示，这可以使工作表视图更加整洁，特别是在处理大型工作表时。</li>
+</ol>
+<h4 id="使用示例"><a class="markdownIt-Anchor" href="#使用示例"></a> 使用示例</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Sub TogglePageBreaks()</span><br><span class="line">    Dim ws As Worksheet</span><br><span class="line">    Set ws = ThisWorkbook.Sheets(&quot;Sheet1&quot;)</span><br><span class="line"></span><br><span class="line">    &#x27; 切换页面分隔符的显示状态</span><br><span class="line">    ws.DisplayPageBreaks = Not ws.DisplayPageBreaks</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>TogglePageBreaks</code>子程序会切换工作表&quot;Sheet1&quot;中页面分隔符的显示状态。</p>
+<h4 id="注意事项-2"><a class="markdownIt-Anchor" href="#注意事项-2"></a> 注意事项</h4>
+<ul>
+<li><strong>性能影响</strong>：启用页面分隔符的显示可能会降低 Excel 的性能，特别是在大型工作表中，因为 Excel 需要计算打印区域来显示分隔符。</li>
+<li><strong>打印预览</strong>：即使<code>DisplayPageBreaks</code>设置为<code>False</code>，在打印预览模式下，页面分隔符仍然会显示。</li>
+</ul>
+<h4 id="结论-2"><a class="markdownIt-Anchor" href="#结论-2"></a> 结论</h4>
+<ul>
+<li><code>DisplayPageBreaks</code>属性是 Excel VBA 中用于控制工作表页面分隔符显示的属性。</li>
+<li>通过设置为<code>True</code>或<code>False</code>可以显示或隐藏页面分隔符，但过多地显示页面分隔符可能会影响 Excel 的性能。</li>
+</ul>
+<h3 id="vba-中的-activeworkbook-对象与多个工作簿"><a class="markdownIt-Anchor" href="#vba-中的-activeworkbook-对象与多个工作簿"></a> VBA 中的 ActiveWorkbook 对象与多个工作簿</h3>
+<h4 id="工作原理-2"><a class="markdownIt-Anchor" href="#工作原理-2"></a> 工作原理</h4>
+<p>在 Excel 中，<code>ActiveWorkbook</code>对象指向当前用户界面中激活的工作簿。即使有多个工作簿同时打开，<code>ActiveWorkbook</code>始终引用的是当前用户正在操作的工作簿。</p>
+<h4 id="对象指向-2"><a class="markdownIt-Anchor" href="#对象指向-2"></a> 对象指向</h4>
+<ol>
+<li><strong>用户界面激活</strong>：用户通过点击工作簿的窗口或使用窗口切换快捷键（如 Ctrl+Tab）激活某个工作簿时，该工作簿成为<code>ActiveWorkbook</code>。</li>
+<li><strong>代码激活</strong>：VBA 代码可以通过调用<code>Activate</code>方法或者设置<code>Application.ActiveWorkbook</code>来改变哪个工作簿是激活的。</li>
+</ol>
+<h4 id="示例-2"><a class="markdownIt-Anchor" href="#示例-2"></a> 示例</h4>
+<p>假设有两个工作簿：Workbook1.xlsm 和 Workbook2.xlsm，如果 Workbook1.xlsm 当前是激活的工作簿，以下 VBA 代码将显示&quot;Workbook1.xlsm&quot;：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sub ShowActiveWorkbookName()</span><br><span class="line">    MsgBox ActiveWorkbook.Name</span><br><span class="line">End Sub</span><br></pre></td></tr></table></figure>
+<p>如果用户在执行上述宏之前切换到 Workbook2.xlsm，那么宏将显示&quot;Workbook2.xlsm&quot;。</p>
+<h4 id="结论-3"><a class="markdownIt-Anchor" href="#结论-3"></a> 结论</h4>
+<ul>
+<li><code>ActiveWorkbook</code>对象在 VBA 中用于引用当前激活的工作簿，它随着用户或代码的操作而改变。</li>
+<li>在多工作簿环境中使用<code>ActiveWorkbook</code>时需要注意，它可能因为用户的切换或代码的执行而随时改变指向。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://wangzhangbo.top/2024/03/25/%E8%B4%AD%E4%B9%B0%E7%94%B5%E5%8A%A8%E8%87%AA%E8%A1%8C%E8%BD%A6%E6%94%BB%E7%95%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1488,403 +1650,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wangzhangbo.top/2023/08/30/%E4%B9%B0%E6%88%BF%E6%94%BB%E7%95%A5-%E9%80%89%E6%88%BF%E6%B5%81%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="wangzhangbo">
-      <meta itemprop="description" content="细节决定成败，习惯成就未来">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/08/30/%E4%B9%B0%E6%88%BF%E6%94%BB%E7%95%A5-%E9%80%89%E6%88%BF%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">买房攻略~选房流程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-08-30 12:48:18" itemprop="dateCreated datePublished" datetime="2023-08-30T12:48:18+08:00">2023-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-27 15:59:00" itemprop="dateModified" datetime="2023-09-27T15:59:00+08:00">2023-09-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="描述需求"><a class="markdownIt-Anchor" href="#描述需求"></a> 描述需求</h3>
-<h4 id="购房预算"><a class="markdownIt-Anchor" href="#购房预算"></a> 购房预算</h4>
-<p>毛坯房：150W以内</p>
-<p>精装修：160W以内</p>
-<p>首付：50W以内</p>
-<p>每月分期：6000以内</p>
-<h4 id="地段需求"><a class="markdownIt-Anchor" href="#地段需求"></a> 地段需求</h4>
-<ul>
-<li>尽量三环内，最多不超过四环</li>
-<li>距离东站地铁或公交通勤在1小时内，尽量不超过1小时20分钟</li>
-<li>海拔尽量要大于90米（高新&gt;中原&gt;管城&gt;=金水&gt;经开）</li>
-<li>不能离高科技产业和金融产业太远</li>
-</ul>
-<h4 id="环境需求"><a class="markdownIt-Anchor" href="#环境需求"></a> 环境需求</h4>
-<ul>
-<li>不能太吵闹，小区附近不能有高速、火车、机场，尽量不要临街</li>
-<li>交通要方便，尽量离地铁近</li>
-<li>购物要方便，附近要有超市</li>
-</ul>
-<h4 id="房子需求"><a class="markdownIt-Anchor" href="#房子需求"></a> 房子需求</h4>
-<ul>
-<li>房子所在的楼尽量不要临街</li>
-<li>房子建成要在2年到8年</li>
-<li>房屋套内使用面积不小于75平方米</li>
-<li>房子尽量要双卫</li>
-<li>房子所在的楼层高尽量不要超过20层</li>
-<li>房子所在的楼层的四层以上，最多不超过2/3</li>
-<li>房子不能出现过大型火灾事故以及人员死亡</li>
-<li>房子的产权必须清晰，无抵押，无租赁</li>
-<li>房子尽量南北通透和动静分离</li>
-</ul>
-<h4 id="配套需求"><a class="markdownIt-Anchor" href="#配套需求"></a> 配套需求</h4>
-<ul>
-<li>开发商尽量是国企央企</li>
-<li>物业尽量要比较有口碑的</li>
-<li>车位要比较充足</li>
-</ul>
-<h3 id="筛选房子"><a class="markdownIt-Anchor" href="#筛选房子"></a> 筛选房子</h3>
-<h4 id="根据购房预算和区域房价筛选区域"><a class="markdownIt-Anchor" href="#根据购房预算和区域房价筛选区域"></a> 根据购房预算和区域房价筛选区域</h4>
-<p>金水区、中原区、管城回族区、二七区、郑东新区</p>
-<h4 id="根据地段和环境从区域中筛选小区"><a class="markdownIt-Anchor" href="#根据地段和环境从区域中筛选小区"></a> 根据地段和环境从区域中筛选小区</h4>
-<ol>
-<li>管城-鑫苑城1号院
-<ol>
-<li>开发商：鑫苑集团，有烂尾问题</li>
-<li>物业：河南鑫苑物业管理有限公司</li>
-<li>交通：距离郑州东站43分钟，周围有地铁</li>
-<li>环境：有5栋楼，楼层密集，楼间距狭窄，绿化一般，附近有超市</li>
-<li>学校：周围有中学</li>
-</ol>
-</li>
-<li>管城-鑫苑城3号院
-<ol>
-<li>开发商：中国奥园地产集团股份有限公司</li>
-<li>物业：鑫苑物业服务有限公司</li>
-<li>交通：距离郑州东站42分钟（与鑫苑城1号院挨着）</li>
-<li>环境：有9栋楼，楼层密集，楼间距狭窄，绿化一般，附近有超市</li>
-<li>学校：周围有中学</li>
-</ol>
-</li>
-<li>管城-康桥知园
-<ol>
-<li>开发商：河南协广置业有限公司</li>
-<li>物业：河南康桥物业服务有限公司</li>
-<li>交通：距离东站47分钟</li>
-<li>环境：有9栋楼，楼层密集，楼间距狭窄，绿化一般，附近有超市</li>
-<li>学校：周围有小学和外国语学校</li>
-</ol>
-</li>
-<li>管城-龙源世纪龙城三号院（开发商：河南龙源房地产开发有限责任公司，隶属于河南省电力公司，物业：河南省时代物业服务有限公司，距离郑州东站39分钟）</li>
-<li>管城-云尚城樱海园（开发商：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/519478122/answer/2991634343">世茂集团</a>，物业：世茂天成物业服务集团有限公司，有负面评价，距离郑州东站33分钟）</li>
-<li>管城-正商裕园6号院（开发商：河南正商房地产有限公司，物业：河南正商物业管理有限公司，距离郑州东站44分钟）</li>
-<li>管城-正商中州城百合园（开发商：未查到，物业：河南正商物业管理有限公司，距离郑州东站1小时1分钟）</li>
-<li>管城-正商中州城玉兰园（开发商：正商集团正商中州城玉兰园，物业：河南正商物业管理有限公司，小区有维护问题，距离郑州东站1小时）</li>
-<li>管城-正商幸福港湾幸福城（开发商：河南正商房地产有限公司，物业：未查到，距离郑州东站34分钟）</li>
-<li>管城-永威澜溪庭（开发商：未查到，物业：未查到，距离郑州东站1小时9分钟）</li>
-<li>管城-民安尚郡（开发商：未查到，物业：未查到，距离郑州东站44分钟）</li>
-<li>管城-永远理想名苑（开发商：郑州逸泉房地产开发有限公司，物业：珠江物业顾问公司，距离郑州东站33分钟）</li>
-<li>管城-正商华钻澜庭2号院（开发商：南京怡人山水置业有限公司，物业：河南正商物业管理有限公司，距离郑州东站45分钟）</li>
-<li>管城-金锣湾万福园（开发商：未查到，物业：郑州艺城物业管理服务有限公司，距离郑州东站35分钟）</li>
-<li>管城-康桥玥棠（开发商：郑州康桥房地产开发有限责任公司，物业：河南康桥物业服务有限公司，距离郑州东站1小时）</li>
-<li>管城-新蓝钻C区（开发商：河南正商新铭置业有限公司，物业：河南正商物业管理有限公司，距离郑州东站33分钟）</li>
-<li>中原-风和日丽家园（开发商：河南康隆置业有限责任公司，物业：郑州康隆物业管理有限公司，距离郑州东站49分钟）</li>
-<li>中原-和昌湾景国际（开发商：河南运昌置业有限公司，物业：未查到，距离郑州东站1小时5分钟）</li>
-<li>中原-公园壹号（开发商：上海升龙集团有限公司，物业：河南升龙物业管理有限公司，未找到负面信息，距离郑州东站45分钟）</li>
-<li>中原-五建新街坊1号院（开发商：河南五建置业有限公司，物业：郑州建五物业服务有限公司，前身是国企，未找到负面新闻，距离郑州东站56分钟）</li>
-<li>中原-五建新街坊5号院（开发商：河南五建置业有限公司，物业：郑州建五物业服务有限公司，前身是国企，未找到负面新闻，距离郑州东站53分钟）</li>
-<li>中原-华瑞紫韵星园（开发商：郑州华瑞紫韵置业有限公司，物业：未找到，有维权纠纷，距离郑州东站1小时）</li>
-<li>中原-华瑞紫韵丽园（开发商：未找到，物业：未找到，距离郑州东站1小时1分钟）</li>
-<li>中原-阳光城丽景公馆（开发商：郑州鑫岚光房地产开发有限公司，有股权纠纷，距离郑州东站1小时8分钟）</li>
-<li>中原-阳光城丽景公馆南苑（开发商：郑州鑫岚光房地产开发有限公司，有股权纠纷，距离郑州东站1小时14分钟）</li>
-<li>中原-保利心语二期（开发商：保利集团，央企，距离郑州东站57分钟）</li>
-<li>中原-盛悦府（开发商：郑州建业高新置业有限公司，物业：河南建业物业管理有限公司，优秀民企，注意配套设置，四周有污水处理厂，距离郑州东站1小时7分钟）</li>
-<li>中原-郑地璞园（开发商：郑州地产集团有限公司，物业：郑州亚新物业服务有限公司，郑州国企，距离郑州东站58分钟）</li>
-<li>中原-保利百合（开发商：郑州保利房地产开发有限公司，物业：保利物业发展股份有限公司郑州分公司，距离郑州东站1小时1分钟）</li>
-<li>中原-升龙天汇1号院（开发商：郑州元发置业有限公司，物业：河南升龙物业管理有限公司，距离郑州东站53分钟）</li>
-<li>中原-盛世卧龙城北院（开发商：河南纵鑫置业有限公司，物业：河南新康桥物业服务有限公司，有延期交付问题，距离郑州东站1小时2分钟）</li>
-<li>中原-百合里（开发商：河南正商置业有限公司，物业：河南正商物业管理有限公司，距离郑州东站1小时7分钟）</li>
-<li>中原-栖湖怡家（开发商：河南德兴置业有限公司，物业：私人承办物业，距离郑州东站1小时2分钟）</li>
-<li>经开-正商汇航雅园（开发商：正商集团，物业：未查到，有交房纠纷，房屋质量纠纷，距离郑州东站34分钟）</li>
-<li>经开-智荟园（开发商：郑州市沃土千年置业有限公司，物业： 郑州祥汇物业服务有限公司，距离郑州东站31分钟）</li>
-<li>经开-宏光和园（开发商：河南宏光奥林匹克置业有限公司，物业：郑州奥园物业管理有限公司，距离郑州东站18分钟）</li>
-<li>经开-中海万景公馆（开发商：郑州海滨房地产开发有限公司，物业：中海物业管理有限公司郑州分公司，距离郑州东站44分钟）</li>
-<li>二七-升龙城2号院（开发商：上海升龙投资集团有限公司郑州分公司，物业：河南泽龙物业服务有限公司，未发现负面消息，距离郑州东站45分钟）</li>
-<li>二七-升龙城8号院（开发商：上海升龙投资集团有限公司郑州分公司，物业：河南泽龙物业服务有限公司，未发现负面消息，距离郑州东站38分钟）</li>
-<li>二七-万科大都会天悦苑（开发商：北京明信时代投资发展有限公司，物业：北京高力国际物业服务有限公司，距离郑州东站1小时22分钟）</li>
-<li>二七-橄榄城润泽园（开发商：亚新集团，距离郑州东站50分钟）</li>
-<li>二七-正商城和园1号院（开发商：河南正商房地产有限公司，物业：河南正商物业管理有限公司，距离郑州东站28分钟）</li>
-<li>金水-亚新美好城邦（开发商：郑州新和润置业有限公司，物业：郑州亚新物业服务有限公司，小的民营企业，有房屋纠纷，距离郑州东站47分钟）</li>
-<li>金水-万林府贰号院（开发商：河南万林有限公司，物业：源伟物业，民企，有被罚记录，距离郑州东站1小时32分钟）</li>
-<li>金水-永恒理想公元（开发商：郑州永恒万通置业有限公司，物业：郑州凯旋物业管理有限公司，距离郑州东站29分钟）</li>
-<li>惠济-北郡一期（开发商：河南民泰置业有限公司，物业：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B2%B3%E5%8D%97%E6%B0%91%E5%AE%89%E7%89%A9%E4%B8%9A%E7%AE%A1%E7%90%86%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/3465761?fromModule=lemma_inlink">河南民安物业管理有限公司</a>，万科旗下，未查到异常信息，距离郑州东站1小时4分钟）</li>
-<li>惠济-北郡二期（开发商：河南民泰置业有限公司，物业：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B2%B3%E5%8D%97%E6%B0%91%E5%AE%89%E7%89%A9%E4%B8%9A%E7%AE%A1%E7%90%86%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/3465761?fromModule=lemma_inlink">河南民安物业管理有限公司</a>，万科旗下，未查到异常信息，距离郑州东站59分钟）</li>
-<li>惠济-建业花园里海棠苑（开发商：建业集团，物业：河南建业管理公司，距离郑州东站54分钟）</li>
-<li>惠济-建业尚悦居（开发商：河南惠花城乡建设发展有限公司，建业：河南建业管理公司，距离郑州东站1小时）</li>
-<li>惠济-万科天伦紫台一期（开发商：深圳万科，物业：万科物业有限公司，距离东站1小时24分钟）</li>
-<li>惠济-融创城开龙府2号院（开发商：郑州大有永固置业有限公司，物业：郑州大有永固置业有限公司，距离东站1小时17分钟）</li>
-<li>惠济-天伦庄园三期（开发商：河南省天伦房地产开发有限公司，物业：河南省天伦物业管理有限公司，距离郑州东站1小时6分钟）</li>
-<li>惠济-景园（开发商：郑州碧源置业有限公司，物业：深圳彩生活物业管理有限公司，距离郑州东站1小时8分钟）</li>
-<li>惠济-升龙汇金广场（开发商：郑州中元置业有限公司，物业：未找到，距离郑州东站47分钟）</li>
-<li>惠济-万科民安云城（开发商：河南民泰置业有限公司，物业：郑州万科物业服务有限公司，距离郑州东站1小时17分钟）</li>
-<li>惠济-中海湖滨世家悠然苑（开发商：郑州海耀房地产开发有限公司，物业：中海物业管理有限公司郑州分公司，距离郑州东站1小时8分钟）</li>
-<li>高新-谦祥万和城三期（开发商：河南谦茂置业有限公司，物业：郑州盛基物业管理有限公司，距离郑州东站1小时18分钟）</li>
-<li>高新-升龙又一城AB区（开发商：郑州泽龙置业有限公司，物业：未找到，距离郑州东站1小时8分钟）</li>
-<li>高新-五龙新城香逸园（开发商：重庆汇东房地产开发有限公司，物业：未找到，距离郑州东站57分钟）</li>
-<li>高新-五龙新城香榭园（开发商：北京五龙新村开发公司，物业：未找到，距离郑州东站57分钟）</li>
-<li>高新-建业香雅园（开发商：物业：广州天力物业发展有限有限公司郑州分公司，距离郑州东站57分钟）</li>
-</ol>
-<h4 id="根据开发商和物业再次筛选房子小区"><a class="markdownIt-Anchor" href="#根据开发商和物业再次筛选房子小区"></a> 根据开发商和物业再次筛选房子小区</h4>
-<ol>
-<li>管城-绿都紫荆华庭朗园
-<ol>
-<li>开发商：未查到</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站44分钟，周围有地铁</li>
-<li>环境：有5栋楼，楼层密集，楼间距十分狭窄，绿化很差，周围有广场，挨着高架桥，附近有公园</li>
-<li>学校：附近有私立小学和私立中学</li>
-</ol>
-</li>
-<li>管城-绿都紫荆华庭晴园
-<ol>
-<li>开发商：绿都地产集团</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站41分钟</li>
-<li>环境：有11栋楼，楼层密集，楼间距一般，绿化一般，周围有广场，挨着高架桥，附近有公园</li>
-<li>学校：附近有私立小学和私立中学</li>
-</ol>
-</li>
-<li>管城-绿都紫荆华庭雅园
-<ol>
-<li>开发商：绿都地产集团</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站46分钟</li>
-<li>环境：有20栋楼，楼层密集，楼间距十分狭窄，绿化很差，周围有广场，挨着高架桥，附近有公园</li>
-<li>学校：附近有私立小学和私立中学</li>
-</ol>
-</li>
-<li>管城-绿都澜湾椿园（有建垃圾场的消息，也有业主维权）
-<ol>
-<li>开发商：郑州绿锦置业有限公司</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站55分钟</li>
-<li>环境：有8栋楼，楼层密集，楼间距狭窄，绿化一般，附近有公园</li>
-<li>学校：附近有公立中学</li>
-</ol>
-</li>
-<li>管城-绿都澜湾枫园
-<ol>
-<li>开发商：郑州绿锦置业有限公司</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站46分钟</li>
-<li>环境：有9栋楼，楼层密集，楼间距狭窄，绿化一般，附近有公园</li>
-<li>学校：附近有公立中学</li>
-</ol>
-</li>
-<li>管城-绿都澜湾榕园
-<ol>
-<li>开发商：郑州绿锦置业有限公司</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站57分钟</li>
-<li>环境：有10栋楼，楼层密集，楼间距一般，绿化一般，附近有公园</li>
-<li>学校：附近有公立中学</li>
-</ol>
-</li>
-<li>管城-绿都澜湾桂园
-<ol>
-<li>开发商：郑州绿锦置业有限公司</li>
-<li>物业：河南绿都物业服务有限公司</li>
-<li>交通：距离郑州东站1小时1分钟</li>
-<li>环境：有10栋楼，楼层密集，楼间距狭窄，绿化一般，附近有公园，附近有工地</li>
-<li>学校：附近有公立中学</li>
-</ol>
-</li>
-<li>管城-九鼎公馆二号院
-<ol>
-<li>开发商：振兴集团，后面几期有烂尾问题</li>
-<li>物业：未查到</li>
-<li>交通：距离郑州东站43分钟</li>
-<li>环境：有7栋楼，楼层密集，楼间距可以，绿化可以，附近有地铁，有广场</li>
-<li>学校：附近有小学</li>
-</ol>
-</li>
-<li>惠济-建业尚悦居
-<ol>
-<li>开发商：河南惠花城乡建设发展有限公司</li>
-<li>物业：河南建业管理公司</li>
-<li>交通：距离郑州东站1小时6分钟，附近挨着中州大道高速路</li>
-<li>环境：有10栋楼，小高层（16层），楼间距良好，绿化良好，附近有地铁</li>
-<li>学校：附近有幼儿园、中学</li>
-</ol>
-</li>
-<li>惠济-万科天伦紫台一期
-<ol>
-<li>开发商：深圳万科</li>
-<li>物业：万科物业有限公司</li>
-<li>交通：距离郑州东站1小时16分钟，附近挨着中州大道高速路</li>
-<li>环境：有19栋楼，高层（25-33层），楼间距可以，绿化可以，附近有地铁，有广场，公园</li>
-<li>学校：附近有幼儿园、小学、中学、大学</li>
-</ol>
-</li>
-<li>惠济-中海湖滨世家悠然苑
-<ol>
-<li>开发商： 郑州海耀房地产开发有限公司</li>
-<li>物业： 中海物业管理有限公司郑州分公司</li>
-<li>交通：距离郑州东站1小时11分钟，附近挨着中州大道高速路</li>
-<li>环境：有13栋楼，高层（25-33层），楼间距一般，绿化一般，附近有地铁，有广场，公园</li>
-<li>学校：附近有幼儿园、小学、中学、大学</li>
-</ol>
-</li>
-</ol>
-<h3 id="现场看房"><a class="markdownIt-Anchor" href="#现场看房"></a> 现场看房</h3>
-<h4 id="筛选二手房产中介"><a class="markdownIt-Anchor" href="#筛选二手房产中介"></a> 筛选二手房产中介</h4>
-<p>询问一些专业问题，考察房产中介</p>
-<ol>
-<li>关于当前的房贷利率是什么样的？</li>
-<li>关于异地公积金贷款的政策？</li>
-<li>关于二手房的房贷利率？</li>
-<li>根据我的购房需求有什么推荐？</li>
-<li>讲解一下推荐的小区的优缺点？</li>
-</ol>
-<h4 id="如何规划看房计划"><a class="markdownIt-Anchor" href="#如何规划看房计划"></a> 如何规划看房计划</h4>
-<ol>
-<li>筛选出合适的中介</li>
-<li>根据自己看中的小区和中介推荐的小区规划行程</li>
-<li>与中介约定看房的时间和地点</li>
-</ol>
-<h4 id="看房的要点有哪些"><a class="markdownIt-Anchor" href="#看房的要点有哪些"></a> 看房的要点有哪些</h4>
-<ol>
-<li>看小区周围是否影响环境或者健康的设施
-<ol>
-<li>小区附近是否存在墓地、垃圾场、高压线、电厂、化工厂、高速路</li>
-</ol>
-</li>
-<li>查看小区的配套
-<ol>
-<li>搜索小区周边的地铁、超市、医院、学校、公园。</li>
-</ol>
-</li>
-<li>查看小区环境
-<ol>
-<li>小区安保是否完善</li>
-<li>小区是否整洁</li>
-<li>小区的绿化率</li>
-<li>小区停车位是否充足</li>
-</ol>
-</li>
-<li>查看大楼环境
-<ol>
-<li>大楼之间的间距</li>
-<li>大楼的高度</li>
-<li>大楼外层是否有脱落、裂缝、漏水</li>
-<li>楼里过道是否有占用</li>
-<li>电梯是否老旧</li>
-<li>大楼是否临街</li>
-</ol>
-</li>
-<li>查看房屋环境
-<ol>
-<li>户型是否是合理、动静分离、所有房间都明亮</li>
-<li>检查是否存在漏水、房屋的墙角、厨房底部水槽、洗手间的地板和四周、阳台顶部墙角和地板</li>
-<li>查看承重墙、主梁、地板是否有裂纹。（1.通过声音判断，敲击墙体，没有太多的声音为承重墙，有清脆的大回声的是非承重墙。2.通过厚度判断，非承重墙的墙体厚度明显比承重墙薄。3.通过部位判断，外墙和邻居共用的墙通常都是承重墙，卫生间、储藏间的墙一般都是非承重墙。）</li>
-<li>检查门窗是否存在毁坏或者故障</li>
-<li>检查插头、电器是否可以使用</li>
-</ol>
-</li>
-<li>询问房屋信息
-<ol>
-<li>房屋满几年，有哪些税费</li>
-<li>是否有抵押、租赁</li>
-<li>是否满五唯一</li>
-<li>房子的产权人有哪些</li>
-<li>房屋的户籍情况，是否有非产权人在户口下，尤其是否有学区名额</li>
-</ol>
-</li>
-</ol>
-<h4 id="咨询中介哪些问题"><a class="markdownIt-Anchor" href="#咨询中介哪些问题"></a> 咨询中介哪些问题</h4>
-<h3 id="最终购房"><a class="markdownIt-Anchor" href="#最终购房"></a> 最终购房</h3>
-<h4 id="计算购房总成本"><a class="markdownIt-Anchor" href="#计算购房总成本"></a> 计算购房总成本</h4>
-<h4 id="筛选出最终结果"><a class="markdownIt-Anchor" href="#筛选出最终结果"></a> 筛选出最终结果</h4>
-<h4 id="如何与中介讲价"><a class="markdownIt-Anchor" href="#如何与中介讲价"></a> 如何与中介讲价</h4>
-<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/395386819">郑州各区海拔图</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/354230499">郑州产业分布图</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.chacewang.com/newsdetail/news183295.html">郑州十四五计划</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.toutiao.com/article/7042207263775539748/?&amp;source=m_redirect&amp;wid=1694001590857">郑州开发商排名</a></li>
-<li><a target="_blank" rel="noopener" href="https://m.lejucaijing.com/news-6905673553035968408.html">中国物业排名</a></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1956,20 +1721,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2010,19 +1775,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">82k</span>
+    <span title="站点总字数">85k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:15</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共47.9k字</span>
+  <span class="post-count">博客全站共49.4k字</span>
 </div>
 
 
