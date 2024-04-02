@@ -195,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-04-01 19:39:14 / 修改时间：20:00:05" itemprop="dateCreated datePublished" datetime="2024-04-01T19:39:14+08:00">2024-04-01</time>
+              <time title="创建时间：2024-04-01 19:39:14" itemprop="dateCreated datePublished" datetime="2024-04-01T19:39:14+08:00">2024-04-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-02 12:55:18" itemprop="dateModified" datetime="2024-04-02T12:55:18+08:00">2024-04-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -215,14 +221,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -313,6 +319,51 @@
 <li><code>ActiveWorkbook</code>对象在 VBA 中用于引用当前激活的工作簿，它随着用户或代码的操作而改变。</li>
 <li>在多工作簿环境中使用<code>ActiveWorkbook</code>时需要注意，它可能因为用户的切换或代码的执行而随时改变指向。</li>
 </ul>
+<h3 id="excel的com加载项"><a class="markdownIt-Anchor" href="#excel的com加载项"></a> Excel的COM加载项</h3>
+<p>COM（Component Object Model）加载项是一种特殊类型的Excel加载项，它允许用户添加额外的功能和自动化任务。这些加载项可以是由第三方开发的，也可以是自定义开发的，并且它们是以DLL（动态链接库）或者EXE（可执行文件）的形式存在的。</p>
+<h4 id="com加载项的特点"><a class="markdownIt-Anchor" href="#com加载项的特点"></a> COM加载项的特点</h4>
+<ol>
+<li>
+<p><strong>跨平台兼容性</strong>：COM加载项通常可以在不同的Microsoft Office应用程序之间共享，不仅仅限于Excel。</p>
+</li>
+<li>
+<p><strong>性能</strong>：由于COM加载项是编译过的代码，它们在执行时通常比VBA宏更快更高效。</p>
+</li>
+<li>
+<p><strong>功能扩展</strong>：COM加载项可以使用更多的Windows API功能，从而可以实现更复杂的操作和集成。</p>
+</li>
+<li>
+<p><strong>安全性</strong>：COM加载项的代码是不可见的，这对于保护知识产权和防止恶意代码篡改是有利的。</p>
+</li>
+</ol>
+<h4 id="管理com加载项"><a class="markdownIt-Anchor" href="#管理com加载项"></a> 管理COM加载项</h4>
+<p>要管理Excel中的COM加载项，你可以执行以下步骤：</p>
+<ol>
+<li>打开Excel。</li>
+<li>点击“文件”菜单，选择“选项”。</li>
+<li>在“Excel选项”对话框中，选择“加载项”。</li>
+<li>在“管理”下拉菜单中选择“COM加载项”，然后点击“转到”。</li>
+</ol>
+<h4 id="启用和禁用com加载项"><a class="markdownIt-Anchor" href="#启用和禁用com加载项"></a> 启用和禁用COM加载项</h4>
+<p>在“COM加载项”对话框中，你可以看到当前可用的COM加载项列表。你可以通过以下步骤启用或禁用它们：</p>
+<ol>
+<li>要启用一个COM加载项，勾选它旁边的复选框。</li>
+<li>要禁用一个COM加载项，取消勾选它旁边的复选框。</li>
+<li>点击“确定”以应用更改。</li>
+</ol>
+<h4 id="安装和卸载com加载项"><a class="markdownIt-Anchor" href="#安装和卸载com加载项"></a> 安装和卸载COM加载项</h4>
+<p>安装COM加载项通常涉及运行安装程序或者手动注册DLL文件。卸载则可能需要通过控制面板的“程序和功能”进行，或者使用特定的卸载程序。</p>
+<h4 id="问题解决"><a class="markdownIt-Anchor" href="#问题解决"></a> 问题解决</h4>
+<p>如果你遇到COM加载项无法加载或工作不正常的问题，可以尝试以下几种方法：</p>
+<ol>
+<li><strong>检查加载项是否已启用</strong>：确保在“COM加载项”对话框中已经勾选了该加载项。</li>
+<li><strong>检查加载项的兼容性</strong>：确保加载项与你的Excel版本兼容。</li>
+<li><strong>以管理员身份运行Excel</strong>：有时候，加载项需要额外的权限才能正确加载。</li>
+<li><strong>检查安全性设置</strong>：确保Excel的安全性设置没有阻止加载项的加载。</li>
+<li><strong>修复Office安装</strong>：在控制面板中，使用“修复”功能修复整个Office安装，有时可以解决加载项问题。</li>
+<li><strong>重新注册COM加载项</strong>：使用<code>regsvr32</code>命令重新注册DLL文件。</li>
+</ol>
+<p>如果上述方法都不能解决问题，可能需要联系加载项的开发者获取技术支持。</p>
 
       
     </div>
@@ -1775,19 +1826,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">85k</span>
+    <span title="站点总字数">86k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:18</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共49.4k字</span>
+  <span class="post-count">博客全站共50.1k字</span>
 </div>
 
 
